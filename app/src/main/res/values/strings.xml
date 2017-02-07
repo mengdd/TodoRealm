@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TodoRealm</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_list">Home List</string>
+    <string name="create_list">Create List</string>
 </resources>
