@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.TextInputEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +16,37 @@ import android.view.ViewGroup;
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.utils.LogUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 public class AddListDialogFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = "AddListDialogFragment";
+    @BindView(R.id.input_edit_text)
+    TextInputEditText editText;
+
     private BottomSheetBehavior.BottomSheetCallback bottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
         @Override
         public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if (BottomSheetBehavior.STATE_HIDDEN == newState) {
-                LogUtils.d("Bottom sheet hidden to dismiss");
-                dismiss();
+            switch (newState) {
+                case BottomSheetBehavior.STATE_HIDDEN: {
+                    LogUtils.d("Bottom sheet hidden to dismiss");
+                    dismiss();
+                    break;
+                }
+                case BottomSheetBehavior.STATE_EXPANDED: {
+                    LogUtils.d("expanded");
+                    break;
+                }
+                case BottomSheetBehavior.STATE_COLLAPSED: {
+                    LogUtils.d("collapsed");
+                    break;
+                }
+
             }
+
         }
 
         @Override
@@ -59,6 +80,8 @@ public class AddListDialogFragment extends BottomSheetDialogFragment {
             BottomSheetBehavior bottomSheetBehavior = ((BottomSheetBehavior) behavior);
             bottomSheetBehavior.setBottomSheetCallback(bottomSheetBehaviorCallback);
         }
+
+        ButterKnife.bind(this, contentView);
     }
 
     @Nullable
@@ -71,7 +94,19 @@ public class AddListDialogFragment extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        LogUtils.footPrint();
+        LogUtils.footPrint(); // if onCreateView() return null, onViewCreated() will not be invoked
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @OnClick(R.id.done_button)
+    void onDoneButtonClicked() {
+        // TODO insert the data
+        dismiss();
+
+    }
+
+    @OnClick(R.id.cancel_button)
+    void onCancelButtonClicked() {
+        dismiss();
     }
 }
