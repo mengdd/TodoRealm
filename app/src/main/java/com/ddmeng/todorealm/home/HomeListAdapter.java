@@ -18,6 +18,15 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEW_TYPE_LIST = 1;
     private static final int VIEW_TYPE_FOOTER = 2;
     private List<TodoList> todoLists;
+    private HomeListCallback callback;
+
+    public HomeListAdapter(HomeListCallback callback) {
+        this.callback = callback;
+    }
+
+    public void setTodoLists(List<TodoList> todoLists) {
+        this.todoLists = todoLists;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,7 +38,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             case VIEW_TYPE_FOOTER: {
                 View footerView = layoutInflater.inflate(R.layout.home_footer_view_holder_layout, parent, false);
-                return new HomeFooterViewHolder(footerView);
+                return new HomeFooterViewHolder(footerView, callback);
             }
             case VIEW_TYPE_LIST: {
                 View listView = layoutInflater.inflate(R.layout.home_list_view_holder_layout, parent, false);
@@ -59,5 +68,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return todoLists != null ? todoLists.size() + 2 : 2;
+    }
+
+    public interface HomeListCallback {
+        void showAddNewList();
     }
 }

@@ -17,7 +17,7 @@ import com.ddmeng.todorealm.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeListFragment extends Fragment {
+public class HomeListFragment extends Fragment implements HomeListAdapter.HomeListCallback {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -46,7 +46,13 @@ public class HomeListFragment extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
         homeList.setLayoutManager(new LinearLayoutManager(getContext()));
-        homeListAdapter = new HomeListAdapter();
+        homeListAdapter = new HomeListAdapter(this);
         homeList.setAdapter(homeListAdapter);
+    }
+
+    @Override
+    public void showAddNewList() {
+        AddListDialogFragment addListDialogFragment = new AddListDialogFragment();
+        addListDialogFragment.show(getChildFragmentManager(), AddListDialogFragment.TAG);
     }
 }
