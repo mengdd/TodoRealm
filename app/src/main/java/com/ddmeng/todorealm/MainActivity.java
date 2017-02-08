@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        todoRepository.close();
         super.onDestroy();
+        todoRepository.close();
     }
 }
