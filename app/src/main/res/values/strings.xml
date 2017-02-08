@@ -7,4 +7,6 @@
     <string name="new_list_name">New List Name</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

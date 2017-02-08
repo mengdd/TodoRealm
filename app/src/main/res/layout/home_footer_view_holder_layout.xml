@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/footer_text"
-    style="@style/ListItemStyle"
+    style="@style/ListItemContainerStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:drawableLeft="@drawable/ic_add_black_24dp"
     android:drawableStart="@drawable/ic_add_black_24dp"
-    android:text="@string/create_list" />
+    android:text="@string/create_list"
+    android:textSize="@dimen/list_item_text_size" />

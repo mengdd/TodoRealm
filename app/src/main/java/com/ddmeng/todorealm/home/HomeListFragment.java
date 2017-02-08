@@ -8,13 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.add.AddListDialogFragment;
+import com.ddmeng.todorealm.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +34,7 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
     private HomeListAdapter homeListAdapter;
 
     private HomeListContract.Presenter presenter;
+    private ActionMode actionMode;
 
 
     public HomeListFragment() {
@@ -81,5 +87,47 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
     public void onDestroy() {
         presenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onListItemLongClicked() {
+        LogUtils.d("onLongClicked");
+        if (actionMode != null) {
+            return;
+        }
+
+        actionMode = getActivity().startActionMode(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.home_list_context_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_delete: {
+                        mode.finish();
+                        return true;
+                    }
+                    default: {
+                        return false;
+                    }
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                actionMode = null;
+
+            }
+        });
+
     }
 }

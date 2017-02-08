@@ -42,7 +42,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             case VIEW_TYPE_LIST: {
                 View listView = layoutInflater.inflate(R.layout.home_list_view_holder_layout, parent, false);
-                return new HomeListViewHolder(listView);
+                return new HomeListViewHolder(listView, callback);
             }
         }
         return null;
@@ -72,5 +72,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public interface HomeListCallback {
         void showAddNewList();
+
+        void onListItemLongClicked();
     }
 }
