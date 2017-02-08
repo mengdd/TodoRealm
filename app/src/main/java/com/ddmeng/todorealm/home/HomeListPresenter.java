@@ -13,13 +13,11 @@ class HomeListPresenter implements HomeListContract.Presenter {
     private RealmResults<TodoList> allLists;
 
     HomeListPresenter() {
-        todoRepository = new TodoRepository();
+        todoRepository = TodoRepository.getInstance();
     }
 
     @Override
     public void loadAllLists() {
-        todoRepository = new TodoRepository();
-
         allLists = todoRepository.getAllLists();
         allLists.addChangeListener(new RealmChangeListener<RealmResults<TodoList>>() {
             @Override
@@ -39,7 +37,6 @@ class HomeListPresenter implements HomeListContract.Presenter {
     @Override
     public void attachView(HomeListContract.View view) {
         this.view = view;
-
     }
 
     @Override

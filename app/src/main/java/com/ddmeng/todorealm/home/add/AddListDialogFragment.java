@@ -1,4 +1,4 @@
-package com.ddmeng.todorealm.home;
+package com.ddmeng.todorealm.home.add;
 
 
 import android.app.Dialog;
@@ -9,26 +9,25 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
-import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 
 
-public class AddListDialogFragment extends BottomSheetDialogFragment {
+public class AddListDialogFragment extends BottomSheetDialogFragment implements AddListContract.View {
 
     public static final String TAG = "AddListDialogFragment";
     @BindView(R.id.input_edit_text)
     TextInputEditText editText;
+
+    private AddListContract.Presenter presenter;
 
     private BottomSheetBehavior.BottomSheetCallback bottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
         @Override
@@ -85,6 +84,9 @@ public class AddListDialogFragment extends BottomSheetDialogFragment {
         }
 
         ButterKnife.bind(this, contentView);
+
+        presenter = new AddListPresenter();
+        presenter.attachView(this);
     }
 
     @Nullable
@@ -104,35 +106,22 @@ public class AddListDialogFragment extends BottomSheetDialogFragment {
     @OnClick(R.id.done_button)
     void onDoneButtonClicked() {
         final String currentInput = editText.getText().toString();
-        if (!TextUtils.isEmpty(currentInput)) {
-            Realm realm = Realm.getDefaultInstance();
-            realm.executeTransactionAsync(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    TodoList list = realm.createObject(TodoList.class);
-                    list.setTitle(currentInput);
-
-                }
-            }, new Realm.Transaction.OnSuccess() {
-                @Override
-                public void onSuccess() {
-                    LogUtils.d("insert success");
-                    dismiss();
-                }
-            }, new Realm.Transaction.OnError() {
-                @Override
-                public void onError(Throwable error) {
-                    LogUtils.d("insert failed");
-                    // TODO
-                }
-            });
-
-        }
-
+        presenter.onDoneButtonClick(currentInput);
     }
 
     @OnClick(R.id.cancel_button)
     void onCancelButtonClicked() {
+        presenter.onCancelButtonClick();
+    }
+
+    @Override
+    public void finish() {
         dismiss();
+    }
+
+    @Override
+    public void onDestroyView() {
+        presenter.detachView();
+        super.onDestroyView();
     }
 }
