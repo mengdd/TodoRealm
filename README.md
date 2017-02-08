@@ -24,6 +24,7 @@ An Android Todo-list sample application to play with Realm.
 ### Features backlog
 - [ ] Task priority, mark a task as important, urgent or current doing.
 - [ ] Settings: change the color theme of the app.
+- [ ] Drag to change the item order in list.
 
 
 ## References
