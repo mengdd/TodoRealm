@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
-import com.ddmeng.todorealm.data.TodoList;
+import com.ddmeng.todorealm.data.models.TodoList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +23,7 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder {
 
     public void populate(TodoList list) {
         titleTextView.setText(list.getTitle());
-        int tasksCount = list.getTasks() != null ? list.getTasks().size() : 0;
-        numberTextView.setText(tasksCount);
+        int tasksCount = list.getTasks().size();
+        numberTextView.setText(String.valueOf(tasksCount));
     }
 }

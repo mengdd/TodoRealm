@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
-import com.ddmeng.todorealm.data.TodoList;
+import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.viewholder.HomeFooterViewHolder;
 import com.ddmeng.todorealm.home.viewholder.HomeHeaderViewHolder;
 import com.ddmeng.todorealm.home.viewholder.HomeListViewHolder;
@@ -59,7 +59,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemViewType(int position) {
         if (position == 0) {
             return VIEW_TYPE_HEADER;
-        } else if (todoLists == null || todoLists.size() == position) {
+        } else if (position == todoLists.size() + 1) {
             return VIEW_TYPE_FOOTER;
         }
         return VIEW_TYPE_LIST;
@@ -67,7 +67,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return todoLists != null ? todoLists.size() + 2 : 2;
+        return todoLists.size() + 2;
     }
 
     public interface HomeListCallback {

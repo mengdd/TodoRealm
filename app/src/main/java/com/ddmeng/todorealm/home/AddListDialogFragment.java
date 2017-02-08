@@ -9,16 +9,19 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
+import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 
 public class AddListDialogFragment extends BottomSheetDialogFragment {
@@ -100,8 +103,31 @@ public class AddListDialogFragment extends BottomSheetDialogFragment {
 
     @OnClick(R.id.done_button)
     void onDoneButtonClicked() {
-        // TODO insert the data
-        dismiss();
+        final String currentInput = editText.getText().toString();
+        if (!TextUtils.isEmpty(currentInput)) {
+            Realm realm = Realm.getDefaultInstance();
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    TodoList list = realm.createObject(TodoList.class);
+                    list.setTitle(currentInput);
+
+                }
+            }, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    LogUtils.d("insert success");
+                    dismiss();
+                }
+            }, new Realm.Transaction.OnError() {
+                @Override
+                public void onError(Throwable error) {
+                    LogUtils.d("insert failed");
+                    // TODO
+                }
+            });
+
+        }
 
     }
 

@@ -13,17 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
+import com.ddmeng.todorealm.data.models.TodoList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 
-public class HomeListFragment extends Fragment implements HomeListAdapter.HomeListCallback {
+public class HomeListFragment extends Fragment implements HomeListContract.View, HomeListAdapter.HomeListCallback {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.home_list)
     RecyclerView homeList;
     private HomeListAdapter homeListAdapter;
+
+    private HomeListContract.Presenter presenter;
 
 
     public HomeListFragment() {
@@ -39,7 +43,10 @@ public class HomeListFragment extends Fragment implements HomeListAdapter.HomeLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
+        presenter = new HomeListPresenter();
+        presenter.attachView(this);
         initViews();
+        presenter.loadAllLists();
     }
 
     private void initViews() {
@@ -54,5 +61,24 @@ public class HomeListFragment extends Fragment implements HomeListAdapter.HomeLi
     public void showAddNewList() {
         AddListDialogFragment addListDialogFragment = new AddListDialogFragment();
         addListDialogFragment.show(getChildFragmentManager(), AddListDialogFragment.TAG);
+    }
+
+    @Override
+    public void updateLists(RealmResults<TodoList> lists) {
+        homeListAdapter.setTodoLists(lists);
+        homeListAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        presenter.detachView();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.onDestroy();
+        super.onDestroy();
     }
 }
