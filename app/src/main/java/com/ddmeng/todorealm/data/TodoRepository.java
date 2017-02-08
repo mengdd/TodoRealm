@@ -8,11 +8,10 @@ import io.realm.RealmResults;
 
 public class TodoRepository {
 
-    private final Realm realm;
+    private Realm realm;
     private volatile static TodoRepository instance;
 
     private TodoRepository() {
-        realm = Realm.getDefaultInstance();
     }
 
     public static TodoRepository getInstance() {
@@ -56,6 +55,10 @@ public class TodoRepository {
                 }
             }
         });
+    }
+
+    public void getRealm() {
+        realm = Realm.getDefaultInstance();
     }
 
     public void close() {
