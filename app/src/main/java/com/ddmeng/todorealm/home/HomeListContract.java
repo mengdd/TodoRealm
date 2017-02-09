@@ -8,11 +8,23 @@ import io.realm.RealmResults;
 
 interface HomeListContract {
     interface View extends BaseView {
-        void updateLists(RealmResults<TodoList> lists);
+        void bindListData(RealmResults<TodoList> lists);
+
+        void notifyDataChanged();
+
+        void showListDetail(TodoList list);
     }
 
     interface Presenter extends BasePresenter<HomeListContract.View> {
         void loadAllLists();
+
+        void onListItemClicked(TodoList list);
+
+        void enterActionMode(TodoList list);
+
+        void exitActionMode();
+
+        void deleteSelectedItems();
 
         void onDestroy();
     }

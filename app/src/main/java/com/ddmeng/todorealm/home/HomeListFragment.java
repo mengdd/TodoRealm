@@ -36,7 +36,6 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
     private HomeListContract.Presenter presenter;
     private ActionMode actionMode;
 
-
     public HomeListFragment() {
     }
 
@@ -71,11 +70,19 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
     }
 
     @Override
-    public void updateLists(RealmResults<TodoList> lists) {
+    public void bindListData(RealmResults<TodoList> lists) {
         homeListAdapter.setTodoLists(lists);
+    }
+
+    @Override
+    public void notifyDataChanged() {
         homeListAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showListDetail(TodoList list) {
+        // TODO
+    }
 
     @Override
     public void onDestroyView() {
@@ -90,11 +97,21 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
     }
 
     @Override
-    public void onListItemLongClicked() {
+    public void onListItemClicked(View itemView, TodoList list) {
+        if (isInActionMode()) {
+            itemView.setSelected(true);
+        }
+        presenter.onListItemClicked(list);
+    }
+
+    @Override
+    public void onListItemLongClicked(View itemView, TodoList list) {
         LogUtils.d("onLongClicked");
-        if (actionMode != null) {
+        if (isInActionMode()) {
             return;
         }
+        itemView.setSelected(true);
+        presenter.enterActionMode(list);
 
         actionMode = getActivity().startActionMode(new ActionMode.Callback() {
             @Override
@@ -113,6 +130,7 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_delete: {
+                        presenter.deleteSelectedItems();
                         mode.finish();
                         return true;
                     }
@@ -124,10 +142,15 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
+                presenter.exitActionMode();
                 actionMode = null;
 
             }
         });
 
+    }
+
+    private boolean isInActionMode() {
+        return actionMode != null;
     }
 }

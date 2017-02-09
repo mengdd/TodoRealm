@@ -10,6 +10,7 @@ import com.ddmeng.todorealm.home.HomeListAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnLongClick;
 
 public class HomeListViewHolder extends RecyclerView.ViewHolder {
@@ -19,6 +20,7 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder {
     TextView numberTextView;
 
     private HomeListAdapter.HomeListCallback callback;
+    private TodoList list;
 
     public HomeListViewHolder(View itemView, HomeListAdapter.HomeListCallback callback) {
         super(itemView);
@@ -27,15 +29,20 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void populate(TodoList list) {
+        this.list = list;
         titleTextView.setText(list.getTitle());
         int tasksCount = list.getTasks().size();
         numberTextView.setText(String.valueOf(tasksCount));
     }
 
+    @OnClick(R.id.list_item_container)
+    void onItemClick() {
+        callback.onListItemClicked(itemView, list);
+    }
+
     @OnLongClick(R.id.list_item_container)
     boolean onItemLongClicked() {
-        callback.onListItemLongClicked();
-        itemView.setSelected(true);
+        callback.onListItemLongClicked(itemView, list);
         return true;
     }
 }

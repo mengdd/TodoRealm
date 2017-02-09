@@ -73,6 +73,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public interface HomeListCallback {
         void showAddNewList();
 
-        void onListItemLongClicked();
+        void onListItemClicked(View itemView, TodoList list);
+
+        void onListItemLongClicked(View itemView, TodoList list);
     }
 }

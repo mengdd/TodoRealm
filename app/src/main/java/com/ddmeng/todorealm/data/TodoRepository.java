@@ -1,7 +1,11 @@
 package com.ddmeng.todorealm.data;
 
+import android.support.annotation.NonNull;
+
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.utils.LogUtils;
+
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -49,10 +53,32 @@ public class TodoRepository {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                LogUtils.d("insert failed");
+                LogUtils.e("insert failed: " + error);
                 if (onError != null) {
                     onError.onError(error);
                 }
+            }
+        });
+    }
+
+    public void deleteLists(@NonNull final List<TodoList> lists) {
+        LogUtils.d("delete " + lists.size() + " items");
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                LogUtils.d("deleteFromRealm ");
+                for (TodoList list : lists) {
+                    list.deleteFromRealm();
+                }
+            }
+        });
+    }
+
+    public void deleteList(@NonNull final TodoList list) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                list.deleteFromRealm();
             }
         });
     }
