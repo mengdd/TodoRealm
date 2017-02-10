@@ -1,6 +1,8 @@
 package com.ddmeng.todorealm;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ddmeng.todorealm.data.TodoRepository;
@@ -21,9 +23,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showHomeList() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_content, new HomeListFragment())
-                .commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment homeListFragment = fragmentManager.findFragmentByTag(HomeListFragment.TAG);
+        if (homeListFragment == null) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.main_content, new HomeListFragment(), HomeListFragment.TAG)
+                    .commit();
+        }
     }
 
     @Override

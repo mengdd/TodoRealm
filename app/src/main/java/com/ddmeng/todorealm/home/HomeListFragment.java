@@ -27,6 +27,8 @@ import io.realm.RealmResults;
 
 public class HomeListFragment extends Fragment implements HomeListContract.View, HomeListAdapter.HomeListCallback {
 
+    public static final String TAG = "HomeListFragment";
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.home_list)
