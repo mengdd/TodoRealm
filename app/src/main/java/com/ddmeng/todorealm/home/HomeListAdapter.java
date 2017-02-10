@@ -10,6 +10,7 @@ import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.viewholder.HomeFooterViewHolder;
 import com.ddmeng.todorealm.home.viewholder.HomeHeaderViewHolder;
 import com.ddmeng.todorealm.home.viewholder.HomeListViewHolder;
+import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
 import java.util.List;
 
@@ -19,10 +20,13 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEW_TYPE_FOOTER = 2;
     private List<TodoList> todoLists;
     private HomeListCallback callback;
+    private MultiSelector multiSelector;
 
-    public HomeListAdapter(HomeListCallback callback) {
+    public HomeListAdapter(HomeListCallback callback, MultiSelector multiSelector) {
         this.callback = callback;
+        this.multiSelector = multiSelector;
     }
+
 
     public void setTodoLists(List<TodoList> todoLists) {
         this.todoLists = todoLists;
@@ -42,7 +46,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             case VIEW_TYPE_LIST: {
                 View listView = layoutInflater.inflate(R.layout.home_list_view_holder_layout, parent, false);
-                return new HomeListViewHolder(listView, callback);
+                return new HomeListViewHolder(listView, callback, multiSelector);
             }
         }
         return null;
@@ -71,7 +75,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public interface HomeListCallback {
-        void showAddNewList();
+        void onCreateListClicked();
 
         void onListItemClicked(View itemView, TodoList list);
 

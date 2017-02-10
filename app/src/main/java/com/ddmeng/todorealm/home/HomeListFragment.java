@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.add.AddListDialogFragment;
-import com.ddmeng.todorealm.utils.LogUtils;
+import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +35,7 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
 
     private HomeListContract.Presenter presenter;
     private ActionMode actionMode;
+    private MultiSelector multiSelector;
 
     public HomeListFragment() {
     }
@@ -51,17 +52,35 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
         ButterKnife.bind(this, view);
         presenter = new HomeListPresenter();
         presenter.attachView(this);
-        initViews();
+        presenter.init();
         presenter.loadAllLists();
     }
 
-    private void initViews() {
+    @Override
+    public void onCreateListClicked() {
+        presenter.onCreateListItemClicked();
+    }
+
+    @Override
+    public void onListItemClicked(View itemView, TodoList list) {
+        presenter.onListItemClicked(list);
+    }
+
+    @Override
+    public void onListItemLongClicked(View itemView, TodoList list) {
+        presenter.onListItemLongClicked(list);
+    }
+
+    @Override
+    public void initViews() {
+        multiSelector = new MultiSelector();
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
         homeList.setLayoutManager(new LinearLayoutManager(getContext()));
-        homeListAdapter = new HomeListAdapter(this);
+        homeListAdapter = new HomeListAdapter(this, multiSelector);
         homeList.setAdapter(homeListAdapter);
     }
+
 
     @Override
     public void showAddNewList() {
@@ -96,23 +115,9 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
         super.onDestroy();
     }
 
-    @Override
-    public void onListItemClicked(View itemView, TodoList list) {
-        if (isInActionMode()) {
-            itemView.setSelected(true);
-        }
-        presenter.onListItemClicked(list);
-    }
 
     @Override
-    public void onListItemLongClicked(View itemView, TodoList list) {
-        LogUtils.d("onLongClicked");
-        if (isInActionMode()) {
-            return;
-        }
-        itemView.setSelected(true);
-        presenter.enterActionMode(list);
-
+    public void startActionMode() {
         actionMode = getActivity().startActionMode(new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -142,15 +147,21 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-                presenter.exitActionMode();
-                actionMode = null;
+                presenter.onDestroyActionMode();
 
             }
         });
-
     }
 
-    private boolean isInActionMode() {
-        return actionMode != null;
+    @Override
+    public void finishActionMode() {
+        actionMode.finish();
+    }
+
+    @Override
+    public void onExitActionMode() {
+        multiSelector.setSelectable(false);
+        multiSelector.clearSelections();
+        actionMode = null;
     }
 }

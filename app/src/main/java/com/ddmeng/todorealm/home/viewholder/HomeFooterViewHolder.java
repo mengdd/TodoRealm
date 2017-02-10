@@ -21,6 +21,6 @@ public class HomeFooterViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.footer_text)
     void onItemClicked() {
-        callback.showAddNewList();
+        callback.onCreateListClicked();
     }
 }
