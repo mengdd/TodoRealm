@@ -4,6 +4,8 @@ import com.ddmeng.todorealm.base.BasePresenter;
 import com.ddmeng.todorealm.base.BaseView;
 import com.ddmeng.todorealm.data.models.TodoList;
 
+import java.util.List;
+
 import io.realm.RealmResults;
 
 interface HomeListContract {
@@ -38,7 +40,7 @@ interface HomeListContract {
 
         void onDestroyActionMode();
 
-        void deleteSelectedItems();
+        void deleteSelectedItems(List<Long> itemIds);
 
         void onDestroy();
     }

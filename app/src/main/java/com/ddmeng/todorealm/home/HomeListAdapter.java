@@ -22,13 +22,13 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private HomeListCallback callback;
     private MultiSelector multiSelector;
 
-    public HomeListAdapter(HomeListCallback callback, MultiSelector multiSelector) {
+    HomeListAdapter(HomeListCallback callback, MultiSelector multiSelector) {
         this.callback = callback;
         this.multiSelector = multiSelector;
+        setHasStableIds(true);
     }
 
-
-    public void setTodoLists(List<TodoList> todoLists) {
+    void setTodoLists(List<TodoList> todoLists) {
         this.todoLists = todoLists;
     }
 
@@ -67,6 +67,14 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return VIEW_TYPE_FOOTER;
         }
         return VIEW_TYPE_LIST;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        if (position > 0 && position < todoLists.size() + 1) {
+            return todoLists.get(position - 1).getId();
+        }
+        return super.getItemId(position);
     }
 
     @Override

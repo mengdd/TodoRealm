@@ -1,5 +1,6 @@
 package com.ddmeng.todorealm.ui.multiselect;
 
+import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class MultiSelector {
 
     private SparseBooleanArray selections = new SparseBooleanArray();
     private WeakHolderTracker holderTracker = new WeakHolderTracker();
+    private SparseArray<Long> itemIdsTracker = new SparseArray<>();
     private boolean isSelectable;
 
     public boolean isSelectable() {
@@ -25,15 +27,16 @@ public class MultiSelector {
 
     public void bindHolder(SelectableHolder holder, int position) {
         holderTracker.bindHolder(holder, position);
+        itemIdsTracker.put(position, holder.getItemId());
         refreshHolder(holder);
 
     }
 
     public void setSelected(SelectableHolder holder, boolean isSelected) {
-        setSelected(holder.getAdapterPosition(), holder.getItemId(), isSelected);
+        setSelected(holder.getAdapterPosition(), isSelected);
     }
 
-    public void setSelected(int position, long id, boolean isSelected) {
+    public void setSelected(int position, boolean isSelected) {
         selections.put(position, isSelected);
         refreshHolder(holderTracker.getHolder(position));
     }
@@ -54,19 +57,32 @@ public class MultiSelector {
         return positions;
     }
 
+    public List<Long> getSelectedItemIds() {
+        List<Long> ids = new ArrayList<>();
+
+        for (int i = 0; i < selections.size(); i++) {
+            if (selections.valueAt(i)) {
+                int selectedPosition = selections.keyAt(i);
+                ids.add(itemIdsTracker.get(selectedPosition));
+            }
+        }
+
+        return ids;
+    }
+
     public void clearSelections() {
         selections.clear();
         refreshAllHolders();
     }
 
     public boolean tapSelection(SelectableHolder holder) {
-        return tapSelection(holder.getAdapterPosition(), holder.getItemId());
+        return tapSelection(holder.getAdapterPosition());
     }
 
-    public boolean tapSelection(int position, long itemId) {
+    public boolean tapSelection(int position) {
         if (isSelectable) {
             boolean isSelected = isSelected(position);
-            setSelected(position, itemId, !isSelected);
+            setSelected(position, !isSelected);
             return true;
         } else {
             return false;

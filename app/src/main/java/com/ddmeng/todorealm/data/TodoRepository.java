@@ -35,12 +35,13 @@ public class TodoRepository {
 
     public void addNewList(final String title, final Realm.Transaction.OnSuccess onSuccess,
                            final Realm.Transaction.OnError onError) {
+        Number maxIdNumber = realm.where(TodoList.class).max("id");
+        final long nextId = maxIdNumber != null ? maxIdNumber.longValue() + 1 : 1;
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                TodoList list = realm.createObject(TodoList.class);
+                TodoList list = realm.createObject(TodoList.class, nextId);
                 list.setTitle(title);
-
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -61,24 +62,15 @@ public class TodoRepository {
         });
     }
 
-    public void deleteLists(@NonNull final List<TodoList> lists) {
-        LogUtils.d("delete " + lists.size() + " items");
-        realm.executeTransaction(new Realm.Transaction() {
+    public void deleteLists(@NonNull final List<Long> listIds) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                LogUtils.d("deleteFromRealm ");
-                for (TodoList list : lists) {
-                    list.deleteFromRealm();
-                }
-            }
-        });
-    }
-
-    public void deleteList(@NonNull final TodoList list) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                list.deleteFromRealm();
+                LogUtils.d("delete: " + listIds);
+                Long[] ids = listIds.toArray(new Long[listIds.size()]);
+                RealmResults<TodoList> toDeleteLists = realm.where(TodoList.class).in("id", ids).findAll();
+                LogUtils.d("queryed results: " + toDeleteLists.size());
+                toDeleteLists.deleteAllFromRealm();
             }
         });
     }

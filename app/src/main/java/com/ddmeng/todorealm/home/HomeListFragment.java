@@ -135,7 +135,7 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_delete: {
-                        presenter.deleteSelectedItems();
+                        presenter.deleteSelectedItems(multiSelector.getSelectedItemIds());
                         mode.finish();
                         return true;
                     }

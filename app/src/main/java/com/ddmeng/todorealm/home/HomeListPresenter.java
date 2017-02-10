@@ -4,6 +4,8 @@ import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.utils.LogUtils;
 
+import java.util.List;
+
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
@@ -83,8 +85,7 @@ class HomeListPresenter implements HomeListContract.Presenter {
     }
 
     @Override
-    public void deleteSelectedItems() {
-        //// TODO: 2/10/17
-//        todoRepository.deleteLists(selectedLists);
+    public void deleteSelectedItems(List<Long> itemIds) {
+        todoRepository.deleteLists(itemIds);
     }
 }
