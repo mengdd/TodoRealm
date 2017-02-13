@@ -9,6 +9,7 @@ public class TodoList extends RealmObject {
     private long id;
     private String title;
     private RealmList<Task> tasks;
+    private long createdTime;
 
     public long getId() {
         return id;
@@ -24,6 +25,14 @@ public class TodoList extends RealmObject {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
     }
 
     public RealmList<Task> getTasks() {

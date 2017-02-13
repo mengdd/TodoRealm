@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.utils.LogUtils;
 
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class TodoRepository {
 
@@ -30,7 +32,7 @@ public class TodoRepository {
     }
 
     public RealmResults<TodoList> getAllLists() {
-        return realm.where(TodoList.class).findAll();
+        return realm.where(TodoList.class).findAll().sort("createdTime", Sort.ASCENDING);
     }
 
     public void addNewList(final String title, final Realm.Transaction.OnSuccess onSuccess,
@@ -42,6 +44,7 @@ public class TodoRepository {
             public void execute(Realm realm) {
                 TodoList list = realm.createObject(TodoList.class, nextId);
                 list.setTitle(title);
+                list.setCreatedTime(new Date().getTime());
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
