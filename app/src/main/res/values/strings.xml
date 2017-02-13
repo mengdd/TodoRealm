@@ -9,4 +9,5 @@
     <string name="done">Done</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="error_hint_title_can_not_be_empty">Title can not be empty</string>
 </resources>

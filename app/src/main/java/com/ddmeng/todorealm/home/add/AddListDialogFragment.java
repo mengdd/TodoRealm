@@ -9,6 +9,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import butterknife.OnTextChanged;
 
 
 public class AddListDialogFragment extends BottomSheetDialogFragment implements AddListContract.View {
 
     public static final String TAG = "AddListDialogFragment";
+    @BindView(R.id.input_layout)
+    TextInputLayout inputLayout;
     @BindView(R.id.input_edit_text)
     TextInputEditText editText;
 
@@ -135,6 +139,17 @@ public class AddListDialogFragment extends BottomSheetDialogFragment implements 
         presenter.detachView();
         super.onDestroyView();
     }
+
+    @OnTextChanged(R.id.input_edit_text)
+    void onInputTextChanged(CharSequence text, int start, int count, int after) {
+        if (text.length() == 0) {
+            inputLayout.setError(getString(R.string.error_hint_title_can_not_be_empty));
+            inputLayout.setErrorEnabled(true);
+        } else {
+            inputLayout.setErrorEnabled(false);
+        }
+    }
+
 
     @OnEditorAction(R.id.input_edit_text)
     boolean onEditorAction(TextView view, int actionId, KeyEvent event) {

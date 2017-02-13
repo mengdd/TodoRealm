@@ -39,9 +39,7 @@ class AddListPresenter implements AddListContract.Presenter {
 
     @Override
     public void onCancelButtonClick() {
-        if (view != null) {
-            view.finish();
-        }
+        view.finish();
     }
 
     @Override
