@@ -9,11 +9,14 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputEditText;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.utils.LogUtils;
@@ -21,6 +24,7 @@ import com.ddmeng.todorealm.utils.LogUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 
 public class AddListDialogFragment extends BottomSheetDialogFragment implements AddListContract.View {
@@ -130,5 +134,14 @@ public class AddListDialogFragment extends BottomSheetDialogFragment implements 
     public void onDestroyView() {
         presenter.detachView();
         super.onDestroyView();
+    }
+
+    @OnEditorAction(R.id.input_edit_text)
+    boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            presenter.onDoneButtonClick(editText.getText().toString());
+            return true;
+        }
+        return false;
     }
 }
