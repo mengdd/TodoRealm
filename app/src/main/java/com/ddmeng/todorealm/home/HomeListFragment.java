@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
+import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.add.AddListDialogFragment;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
@@ -52,7 +53,7 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-        presenter = new HomeListPresenter();
+        presenter = new HomeListPresenter(TodoRepository.getInstance());
         presenter.attachView(this);
         presenter.init();
         presenter.loadAllLists();
@@ -64,12 +65,12 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
     }
 
     @Override
-    public void onListItemClicked(View itemView, TodoList list) {
+    public void onListItemClicked(TodoList list) {
         presenter.onListItemClicked(list);
     }
 
     @Override
-    public void onListItemLongClicked(View itemView, TodoList list) {
+    public void onListItemLongClicked(TodoList list) {
         presenter.onListItemLongClicked(list);
     }
 

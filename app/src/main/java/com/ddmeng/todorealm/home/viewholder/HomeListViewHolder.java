@@ -45,7 +45,7 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder implements Selec
     @OnClick(R.id.list_item_container)
     void onItemClick() {
         if (!multiSelector.tapSelection(this)) {
-            callback.onListItemClicked(itemView, list);
+            callback.onListItemClicked(list);
         }
     }
 
@@ -54,7 +54,7 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder implements Selec
         if (!multiSelector.isSelectable()) {
             multiSelector.setSelectable(true);
             multiSelector.setSelected(this, true);
-            callback.onListItemLongClicked(itemView, list);
+            callback.onListItemLongClicked(list);
             return true;
         }
 

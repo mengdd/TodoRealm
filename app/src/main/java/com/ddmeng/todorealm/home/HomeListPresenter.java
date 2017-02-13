@@ -15,8 +15,8 @@ class HomeListPresenter implements HomeListContract.Presenter {
     private RealmResults<TodoList> allLists;
     private boolean isInActionMode;
 
-    HomeListPresenter() {
-        todoRepository = TodoRepository.getInstance();
+    HomeListPresenter(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
     @Override
