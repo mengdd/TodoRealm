@@ -12,6 +12,8 @@ import android.support.design.widget.TextInputEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.utils.LogUtils;
@@ -84,6 +86,11 @@ public class AddListDialogFragment extends BottomSheetDialogFragment implements 
         }
 
         ButterKnife.bind(this, contentView);
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        }
 
         presenter = new AddListPresenter();
         presenter.attachView(this);
