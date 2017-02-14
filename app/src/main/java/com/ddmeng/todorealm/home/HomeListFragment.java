@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ddmeng.todorealm.MainActivity;
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.TodoList;
@@ -103,7 +104,7 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
 
     @Override
     public void showListDetail(TodoList list) {
-        // TODO
+        ((MainActivity) getActivity()).showListDetailFragment(list.getId());
     }
 
     @Override

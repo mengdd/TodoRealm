@@ -17,8 +17,18 @@
     </style>
 
     <style name="ListItemTextStyle">
+        <item name="android:drawablePadding">@dimen/list_item_drawable_padding</item>
         <item name="android:textSize">@dimen/list_item_text_size</item>
         <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="ListItemEditTextStyle">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:drawablePadding">@dimen/list_item_drawable_padding</item>
+        <item name="android:textSize">@dimen/list_item_text_size</item>
     </style>
 
 </resources>

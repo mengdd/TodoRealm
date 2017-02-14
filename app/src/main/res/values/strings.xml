@@ -10,4 +10,5 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="error_hint_title_can_not_be_empty">Title can not be empty</string>
+    <string name="add_a_to_do_task">Add a to-do task</string>
 </resources>

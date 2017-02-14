@@ -35,6 +35,10 @@ public class TodoRepository {
         return realm.where(TodoList.class).findAll().sort("createdTime", Sort.ASCENDING);
     }
 
+    public RealmResults<TodoList> queryList(long id) {
+        return realm.where(TodoList.class).equalTo("id", id).findAll();
+    }
+
     public void addNewList(final String title, final Realm.Transaction.OnSuccess onSuccess,
                            final Realm.Transaction.OnError onError) {
         Number maxIdNumber = realm.where(TodoList.class).max("id");

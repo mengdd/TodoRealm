@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ddmeng.todorealm.detail.list.ListDetailFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary" />
+
+    <EditText
+        android:id="@+id/new_task_input"
+        style="@style/ListItemEditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:drawableLeft="@drawable/ic_add_box_black_24dp"
+        android:drawableStart="@drawable/ic_add_box_black_24dp"
+        android:hint="@string/add_a_to_do_task"
+        android:inputType="text"
+        android:textSize="@dimen/list_item_text_size" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tasks_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/new_task_input" />
+
+</RelativeLayout>
