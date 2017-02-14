@@ -8,11 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
@@ -23,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnEditorAction;
 
 public class ListDetailFragment extends Fragment implements ListDetailContract.View {
 
@@ -100,6 +104,21 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     @Override
     public void notifyDataChanged() {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void clearInput() {
+        newTaskInput.setText(null);
+    }
+
+    @OnEditorAction(R.id.new_task_input)
+    boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+        LogUtils.d("actionId: " + actionId + ", event Action: " + event);
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            presenter.addNewTask(newTaskInput.getText().toString());
+            return true;
+        }
+        return false;
     }
 
     @Override

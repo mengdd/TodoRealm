@@ -3,6 +3,7 @@ package com.ddmeng.todorealm.detail.list;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.TodoList;
 
+import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
@@ -30,6 +31,25 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
                 view.notifyDataChanged();
             }
         });
+    }
+
+    @Override
+    public void addNewTask(String taskTitle) {
+        todoRepository.addNewTask(listId, taskTitle, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                if (view != null) {
+                    view.clearInput();
+                }
+
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+
+            }
+        });
+
     }
 
     @Override

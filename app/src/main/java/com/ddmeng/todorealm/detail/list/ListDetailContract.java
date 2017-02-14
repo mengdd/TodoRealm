@@ -14,6 +14,8 @@ interface ListDetailContract {
         void bingTasksData(List<Task> taskList);
 
         void notifyDataChanged();
+
+        void clearInput();
     }
 
     interface Presenter extends BasePresenter<ListDetailContract.View> {
@@ -21,5 +23,7 @@ interface ListDetailContract {
         void init();
 
         void onDestroy();
+
+        void addNewTask(String taskTitle);
     }
 }

@@ -2,6 +2,7 @@ package com.ddmeng.todorealm.data;
 
 import android.support.annotation.NonNull;
 
+import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.utils.LogUtils;
 
@@ -78,6 +79,42 @@ public class TodoRepository {
                 RealmResults<TodoList> toDeleteLists = realm.where(TodoList.class).in("id", ids).findAll();
                 LogUtils.d("queryed results: " + toDeleteLists.size());
                 toDeleteLists.deleteAllFromRealm();
+            }
+        });
+    }
+
+    public void addNewTask(final long listId, final String taskTitle, final Realm.Transaction.OnSuccess onSuccess,
+                           final Realm.Transaction.OnError onError) {
+        LogUtils.d("add New Task to list " + listId + ", " + taskTitle);
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<TodoList> results = realm.where(TodoList.class).equalTo("id", listId).findAll();
+                if (results.size() > 0) {
+                    TodoList list = results.get(0);
+                    Task task = new Task();
+                    task.setTitle(taskTitle);
+                    list.addTask(task);
+                    realm.copyToRealmOrUpdate(list);
+                }
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                LogUtils.d("insert success");
+                if (onSuccess != null) {
+                    onSuccess.onSuccess();
+                }
+
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                LogUtils.e("insert failed: " + error);
+                if (onError != null) {
+                    onError.onError(error);
+                }
+
             }
         });
     }

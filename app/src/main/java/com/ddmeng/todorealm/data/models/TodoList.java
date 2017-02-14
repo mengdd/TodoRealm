@@ -42,4 +42,8 @@ public class TodoList extends RealmObject {
     public void setTasks(RealmList<Task> tasks) {
         this.tasks = tasks;
     }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
 }
