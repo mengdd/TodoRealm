@@ -77,7 +77,7 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
 
     @Override
     public void deleteSelectedItems(List<Long> itemIds) {
-
+        todoRepository.deleteTasks(itemIds);
     }
 
     @Override

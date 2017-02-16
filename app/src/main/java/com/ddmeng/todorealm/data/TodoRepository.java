@@ -86,6 +86,8 @@ public class TodoRepository {
     public void addNewTask(final long listId, final String taskTitle, final Realm.Transaction.OnSuccess onSuccess,
                            final Realm.Transaction.OnError onError) {
         LogUtils.d("add New Task to list " + listId + ", " + taskTitle);
+        Number maxIdNumber = realm.where(Task.class).max("id");
+        final long nextId = maxIdNumber != null ? maxIdNumber.longValue() + 1 : 1;
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -93,6 +95,7 @@ public class TodoRepository {
                 if (results.size() > 0) {
                     TodoList list = results.get(0);
                     Task task = new Task();
+                    task.setId(nextId);
                     task.setTitle(taskTitle);
                     list.addTask(task);
                     realm.copyToRealmOrUpdate(list);
@@ -115,6 +118,18 @@ public class TodoRepository {
                     onError.onError(error);
                 }
 
+            }
+        });
+    }
+
+    public void deleteTasks(@NonNull final List<Long> taksIds) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                LogUtils.d("delete: " + taksIds);
+                Long[] ids = taksIds.toArray(new Long[taksIds.size()]);
+                RealmResults<Task> toDeleteTasks = realm.where(Task.class).in("id", ids).findAll();
+                toDeleteTasks.deleteAllFromRealm();
             }
         });
     }

@@ -19,6 +19,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public TaskListAdapter(TaskListCallback callback, MultiSelector multiSelector) {
         this.callback = callback;
         this.multiSelector = multiSelector;
+        setHasStableIds(true);
     }
 
     public void setTaskList(List<Task> taskList) {
@@ -34,6 +35,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((TaskItemViewHolder) holder).populate(taskList.get(position));
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return taskList.get(position).getId();
     }
 
     @Override
