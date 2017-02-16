@@ -6,13 +6,13 @@ An Android Todo-list sample application to play with Realm.
 - [ ] Home List: List of lists.
     - [x] Query all lists.
     - [x] Add a new list.
-    - [ ] Delete a list.
+    - [x] Delete a list.
     - [ ] Edit a list.
-    - [ ] Click to show list detail.
+    - [x] Click to show list detail.
     - [ ] FAB to add a task and choose a target list.
 - [ ] List Detail: List of tasks.
-    - [ ] Query all tasks in this list.
-    - [ ] Add a new task.
+    - [x] Query all tasks in this list.
+    - [x] Add a new task.
     - [ ] Delete a task.
     - [ ] Mark a task as done.
     - [ ] Click to show task detail.
