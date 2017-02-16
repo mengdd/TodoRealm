@@ -95,6 +95,11 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.task_list_options_menu, menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             LogUtils.d("home button clicked <-");
