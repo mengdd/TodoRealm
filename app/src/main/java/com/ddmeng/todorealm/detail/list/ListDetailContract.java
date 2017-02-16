@@ -16,6 +16,12 @@ interface ListDetailContract {
         void notifyDataChanged();
 
         void clearInput();
+
+        void showTaskDetail(Task task);
+
+        void startActionMode();
+
+        void onExitActionMode();
     }
 
     interface Presenter extends BasePresenter<ListDetailContract.View> {
@@ -25,5 +31,13 @@ interface ListDetailContract {
         void onDestroy();
 
         void addNewTask(String taskTitle);
+
+        void onTaskItemClicked(Task task);
+
+        void onTaskItemLongClicked(Task task);
+
+        void onDestroyActionMode();
+
+        void deleteSelectedItems(List<Long> itemIds);
     }
 }

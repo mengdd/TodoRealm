@@ -7,11 +7,19 @@ import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.models.Task;
+import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
 import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Task> taskList;
+    private TaskListCallback callback;
+    private MultiSelector multiSelector;
+
+    public TaskListAdapter(TaskListCallback callback, MultiSelector multiSelector) {
+        this.callback = callback;
+        this.multiSelector = multiSelector;
+    }
 
     public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
@@ -20,7 +28,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item_view_holder_layout, parent, false);
-        return new TaskItemViewHolder(view);
+        return new TaskItemViewHolder(view, callback, multiSelector);
     }
 
     @Override
@@ -31,5 +39,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return taskList.size();
+    }
+
+    public interface TaskListCallback {
+        void onTaskItemClicked(Task task);
+
+        void onTaskItemLongClicked(Task task);
     }
 }

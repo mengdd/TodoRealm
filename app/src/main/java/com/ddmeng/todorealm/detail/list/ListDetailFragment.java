@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
+import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 import com.ddmeng.todorealm.utils.LogUtils;
 
 import java.util.List;
@@ -28,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnEditorAction;
 
-public class ListDetailFragment extends Fragment implements ListDetailContract.View {
+public class ListDetailFragment extends Fragment implements ListDetailContract.View, TaskListAdapter.TaskListCallback {
 
     public static final String TAG = "ListDetailFragment";
     private static final String ARG_LIST_ID = "list_id";
@@ -42,6 +46,8 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     private ListDetailPresenter presenter;
     private long listId;
     private TaskListAdapter adapter;
+    private MultiSelector multiSelector;
+    private ActionMode actionMode;
 
     public static ListDetailFragment newInstance(long id) {
         ListDetailFragment fragment = new ListDetailFragment();
@@ -82,7 +88,8 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         tasksList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new TaskListAdapter();
+        multiSelector = new MultiSelector();
+        adapter = new TaskListAdapter(this, multiSelector);
         tasksList.setAdapter(adapter);
 
     }
@@ -111,6 +118,54 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
         newTaskInput.setText(null);
     }
 
+    @Override
+    public void showTaskDetail(Task task) {
+
+    }
+
+    @Override
+    public void startActionMode() {
+        actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.task_list_context_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_delete: {
+                        presenter.deleteSelectedItems(multiSelector.getSelectedItemIds());
+                        mode.finish();
+                        return true;
+                    }
+                    default: {
+                        return false;
+                    }
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                presenter.onDestroyActionMode();
+            }
+        });
+    }
+
+    @Override
+    public void onExitActionMode() {
+        multiSelector.setSelectable(false);
+        multiSelector.clearSelections();
+        actionMode = null;
+    }
+
     @OnEditorAction(R.id.new_task_input)
     boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
         LogUtils.d("actionId: " + actionId + ", event Action: " + event);
@@ -131,5 +186,15 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     public void onDestroy() {
         presenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onTaskItemClicked(Task task) {
+        presenter.onTaskItemClicked(task);
+    }
+
+    @Override
+    public void onTaskItemLongClicked(Task task) {
+        presenter.onTaskItemLongClicked(task);
     }
 }

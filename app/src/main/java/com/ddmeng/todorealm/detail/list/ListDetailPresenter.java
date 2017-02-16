@@ -1,7 +1,10 @@
 package com.ddmeng.todorealm.detail.list;
 
 import com.ddmeng.todorealm.data.TodoRepository;
+import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.data.models.TodoList;
+
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -12,6 +15,7 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
     private final TodoRepository todoRepository;
     private final long listId;
     private RealmResults<TodoList> listResults;
+    private boolean isInActionMode;
 
     ListDetailPresenter(TodoRepository todoRepository, long listId) {
         this.todoRepository = todoRepository;
@@ -49,6 +53,30 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
 
             }
         });
+
+    }
+
+    @Override
+    public void onTaskItemClicked(Task task) {
+        view.showTaskDetail(task);
+    }
+
+    @Override
+    public void onTaskItemLongClicked(Task task) {
+        if (!isInActionMode) {
+            isInActionMode = true;
+            view.startActionMode();
+        }
+    }
+
+    @Override
+    public void onDestroyActionMode() {
+        isInActionMode = false;
+        view.onExitActionMode();
+    }
+
+    @Override
+    public void deleteSelectedItems(List<Long> itemIds) {
 
     }
 
