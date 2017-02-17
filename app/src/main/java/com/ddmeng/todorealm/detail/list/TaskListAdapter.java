@@ -12,13 +12,15 @@ import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements CompletedToggleViewHolder.CompletedToggleCallback {
     private static final int VIEW_TYPE_TASK = 0;
     private static final int VIEW_TYPE_COMPLETED_TOGGLE = 1;
     private List<Task> taskList;
     private TaskListCallback callback;
     private MultiSelector multiSelector;
     private int todoTasksCount;
+    private boolean isShowingDone;
+
 
     public TaskListAdapter(TaskListCallback callback, MultiSelector multiSelector) {
         this.callback = callback;
@@ -52,7 +54,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
             case VIEW_TYPE_COMPLETED_TOGGLE: {
                 View view = layoutInflater.inflate(R.layout.completed_toggle_view_holder_layout, parent, false);
-                return new CompletedToggleViewHolder(view);
+                return new CompletedToggleViewHolder(view, this);
             }
 
         }
@@ -80,7 +82,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return taskList.size() + 1;
+        return isShowingDone ? taskList.size() + 1 : todoTasksCount + 1;
     }
 
     private Task getTask(int adapterPosition) {
@@ -91,6 +93,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void onToggleCheckedChanged(boolean isToggleOn) {
+        isShowingDone = isToggleOn;
     }
 
     public interface TaskListCallback {

@@ -16,7 +16,7 @@ An Android Todo-list sample application to play with Realm.
     - [x] Delete a task.
     - [x] Mark a task as done.
     - [ ] Click to show task detail.
-    - [ ] Show all completed tasks.
+    - [x] Show all completed tasks.
     - [x] Mark a completed task as to-do.
 - [ ] Task Detail.
     - [ ] Edit a task.
