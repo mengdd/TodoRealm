@@ -11,7 +11,7 @@ interface ListDetailContract {
 
         void initViews(String title);
 
-        void bingTasksData(List<Task> taskList);
+        void bingTasksData(List<Task> todoTasks, List<Task> doneTasks);
 
         void notifyDataChanged(String title);
 

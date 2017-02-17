@@ -9,12 +9,16 @@ import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int VIEW_TYPE_TASK = 0;
+    private static final int VIEW_TYPE_COMPLETED_TOGGLE = 1;
     private List<Task> taskList;
     private TaskListCallback callback;
     private MultiSelector multiSelector;
+    private int todoTasksCount;
 
     public TaskListAdapter(TaskListCallback callback, MultiSelector multiSelector) {
         this.callback = callback;
@@ -22,29 +26,71 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         setHasStableIds(true);
     }
 
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
+    public void setTaskList(final List<Task> todoTasks, final List<Task> doneTasks) {
+        this.taskList = new ArrayList<>();
+        taskList.addAll(todoTasks);
+        taskList.addAll(doneTasks);
+        todoTasksCount = todoTasks.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == todoTasksCount) {
+            return VIEW_TYPE_COMPLETED_TOGGLE;
+        } else {
+            return VIEW_TYPE_TASK;
+        }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item_view_holder_layout, parent, false);
-        return new TaskItemViewHolder(view, callback, multiSelector);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        switch (viewType) {
+            case VIEW_TYPE_TASK: {
+                View view = layoutInflater.inflate(R.layout.task_item_view_holder_layout, parent, false);
+                return new TaskItemViewHolder(view, callback, multiSelector);
+            }
+            case VIEW_TYPE_COMPLETED_TOGGLE: {
+                View view = layoutInflater.inflate(R.layout.completed_toggle_view_holder_layout, parent, false);
+                return new CompletedToggleViewHolder(view);
+            }
+
+        }
+        return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((TaskItemViewHolder) holder).populate(taskList.get(position));
+        if (holder instanceof TaskItemViewHolder) {
+            TaskItemViewHolder taskItemHolder = (TaskItemViewHolder) holder;
+            Task task = getTask(position);
+            taskItemHolder.populate(task);
+        }
     }
 
     @Override
     public long getItemId(int position) {
-        return taskList.get(position).getId();
+        Task task = getTask(position);
+        if (task != null) {
+            return task.getId();
+        } else {
+            return super.getItemId(position);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return taskList.size();
+        return taskList.size() + 1;
+    }
+
+    private Task getTask(int adapterPosition) {
+        if (adapterPosition < todoTasksCount) {
+            return taskList.get(adapterPosition);
+        } else if (adapterPosition > todoTasksCount) {
+            return taskList.get(adapterPosition - 1);
+        } else {
+            return null;
+        }
     }
 
     public interface TaskListCallback {

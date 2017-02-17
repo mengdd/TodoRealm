@@ -29,14 +29,22 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
         listResults = todoRepository.queryList(listId);
         list = listResults.get(0);
         view.initViews(list.getTitle());
-        view.bingTasksData(list.getTasks());
 
+        bindData();
         listResults.addChangeListener(new RealmChangeListener<RealmResults<TodoList>>() {
             @Override
             public void onChange(RealmResults<TodoList> element) {
+                LogUtils.d("tasks size: " + element.get(0).getTasks().size());
+                bindData();
                 view.notifyDataChanged(list.getTitle());
             }
         });
+    }
+
+    private void bindData() {
+        RealmResults<Task> todoTasks = todoRepository.queryTasks(listId, false);
+        RealmResults<Task> doneTasks = todoRepository.queryTasks(listId, true);
+        view.bingTasksData(todoTasks, doneTasks);
     }
 
     @Override

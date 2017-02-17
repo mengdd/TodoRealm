@@ -111,6 +111,8 @@ public class TodoRepository {
                     Task task = new Task();
                     task.setId(nextId);
                     task.setTitle(taskTitle);
+                    task.setListId(listId);
+                    task.setCreatedTime(new Date().getTime());
                     list.addTask(task);
                     realm.copyToRealmOrUpdate(list);
                 }
@@ -160,6 +162,14 @@ public class TodoRepository {
                 }
             }
         });
+    }
+
+    public RealmResults<Task> queryTasks(final long listId, final boolean isDone) {
+        return realm.where(Task.class)
+                .equalTo("listId", listId)
+                .equalTo("isDone", isDone)
+                .findAll()
+                .sort("createdTime", Sort.ASCENDING);
     }
 
     public void getRealm() {

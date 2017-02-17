@@ -7,7 +7,9 @@ public class Task extends RealmObject {
     @PrimaryKey
     private long id;
     private String title;
-    private boolean done;
+    private boolean isDone;
+    private long listId;
+    private long createdTime;
 
     public long getId() {
         return id;
@@ -26,11 +28,26 @@ public class Task extends RealmObject {
     }
 
     public boolean isDone() {
-        return done;
+        return isDone;
     }
 
     public void setDone(boolean done) {
-        this.done = done;
+        this.isDone = done;
     }
 
+    public long getListId() {
+        return listId;
+    }
+
+    public void setListId(long listId) {
+        this.listId = listId;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
+    }
 }

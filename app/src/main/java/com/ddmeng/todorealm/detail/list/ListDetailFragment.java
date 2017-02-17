@@ -136,8 +136,8 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     }
 
     @Override
-    public void bingTasksData(List<Task> taskList) {
-        adapter.setTaskList(taskList);
+    public void bingTasksData(List<Task> todoTasks, List<Task> doneTasks) {
+        adapter.setTaskList(todoTasks, doneTasks);
     }
 
     @Override
