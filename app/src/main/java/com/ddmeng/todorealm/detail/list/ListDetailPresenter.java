@@ -3,6 +3,7 @@ package com.ddmeng.todorealm.detail.list;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.data.models.TodoList;
+import com.ddmeng.todorealm.utils.LogUtils;
 
 import java.util.List;
 
@@ -54,7 +55,12 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
 
             }
         });
+    }
 
+    @Override
+    public void onTaskItemCheckedChanged(Task task, boolean isDone) {
+        LogUtils.footPrint();
+        todoRepository.updateTaskState(task.getId(), isDone);
     }
 
     @Override

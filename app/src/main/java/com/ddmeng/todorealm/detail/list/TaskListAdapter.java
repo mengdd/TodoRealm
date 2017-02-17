@@ -48,6 +48,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public interface TaskListCallback {
+        void onTaskItemCheckedChanged(Task task, boolean isDone);
+
         void onTaskItemClicked(Task task);
 
         void onTaskItemLongClicked(Task task);

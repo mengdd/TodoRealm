@@ -34,6 +34,8 @@ interface ListDetailContract {
 
         void addNewTask(String taskTitle);
 
+        void onTaskItemCheckedChanged(Task task, boolean isDone);
+
         void onTaskItemClicked(Task task);
 
         void onTaskItemLongClicked(Task task);

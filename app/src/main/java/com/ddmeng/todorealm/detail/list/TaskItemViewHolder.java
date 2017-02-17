@@ -3,15 +3,18 @@ package com.ddmeng.todorealm.detail.list;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 import com.ddmeng.todorealm.ui.multiselect.SelectableHolder;
+import com.ddmeng.todorealm.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
@@ -38,6 +41,13 @@ public class TaskItemViewHolder extends RecyclerView.ViewHolder implements Selec
         checkBox.setChecked(task.isDone());
         multiSelector.bindHolder(this, getAdapterPosition());
     }
+
+    @OnCheckedChanged(R.id.task_checkbox)
+    void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        LogUtils.d("isChecked: " + isChecked + ", task isDone: " + task.isDone());
+        callback.onTaskItemCheckedChanged(task, isChecked);
+    }
+
 
     @OnClick(R.id.task_item_container)
     void onItemClick() {

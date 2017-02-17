@@ -222,6 +222,11 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     }
 
     @Override
+    public void onTaskItemCheckedChanged(Task task, boolean isDone) {
+        presenter.onTaskItemCheckedChanged(task, isDone);
+    }
+
+    @Override
     public void onTaskItemClicked(Task task) {
         presenter.onTaskItemClicked(task);
     }
