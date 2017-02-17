@@ -5,4 +5,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="list_item_text_size">20sp</dimen>
     <dimen name="list_item_drawable_padding">8dp</dimen>
+    <dimen name="edit_action_view_horizontal_padding">16dp</dimen>
 </resources>

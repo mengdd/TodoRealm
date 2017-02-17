@@ -4,6 +4,7 @@ package com.ddmeng.todorealm.detail.list;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,6 +49,7 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     private TaskListAdapter adapter;
     private MultiSelector multiSelector;
     private ActionMode actionMode;
+    private EditActionViewHolder editActionViewHolder;
 
     public static ListDetailFragment newInstance(long id) {
         ListDetailFragment fragment = new ListDetailFragment();
@@ -97,6 +99,31 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.task_list_options_menu, menu);
+
+        MenuItem editItem = menu.findItem(R.id.action_edit);
+        final View actionView = MenuItemCompat.getActionView(editItem);
+        editActionViewHolder = new EditActionViewHolder(actionView, editItem);
+        MenuItemCompat.setOnActionExpandListener(editItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                LogUtils.footPrint();
+                presenter.onMenuItemActionExpanded();
+
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                LogUtils.footPrint();
+                presenter.onMenuItemActionCollapsed(editActionViewHolder.getCurrentText());
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void showEditActionText(CharSequence text) {
+        editActionViewHolder.showCurrentText(text);
     }
 
     @Override
@@ -114,7 +141,8 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     }
 
     @Override
-    public void notifyDataChanged() {
+    public void notifyDataChanged(String title) {
+        toolbar.setTitle(title);
         adapter.notifyDataSetChanged();
     }
 

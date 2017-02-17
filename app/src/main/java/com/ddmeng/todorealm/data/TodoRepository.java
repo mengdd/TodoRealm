@@ -83,6 +83,20 @@ public class TodoRepository {
         });
     }
 
+    public void updateListTitle(final long listId, final String newTitle) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<TodoList> listResults = realm.where(TodoList.class).equalTo("id", listId).findAll();
+                if (listResults.size() > 0) {
+                    TodoList list = listResults.get(0);
+                    list.setTitle(newTitle);
+                    realm.copyToRealmOrUpdate(list);
+                }
+            }
+        });
+    }
+
     public void addNewTask(final long listId, final String taskTitle, final Realm.Transaction.OnSuccess onSuccess,
                            final Realm.Transaction.OnError onError) {
         LogUtils.d("add New Task to list " + listId + ", " + taskTitle);

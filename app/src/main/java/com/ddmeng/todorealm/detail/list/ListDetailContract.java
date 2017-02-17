@@ -13,7 +13,7 @@ interface ListDetailContract {
 
         void bingTasksData(List<Task> taskList);
 
-        void notifyDataChanged();
+        void notifyDataChanged(String title);
 
         void clearInput();
 
@@ -22,6 +22,8 @@ interface ListDetailContract {
         void startActionMode();
 
         void onExitActionMode();
+
+        void showEditActionText(CharSequence text);
     }
 
     interface Presenter extends BasePresenter<ListDetailContract.View> {
@@ -39,5 +41,9 @@ interface ListDetailContract {
         void onDestroyActionMode();
 
         void deleteSelectedItems(List<Long> itemIds);
+
+        void onMenuItemActionExpanded();
+
+        void onMenuItemActionCollapsed(String text);
     }
 }

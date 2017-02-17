@@ -5,5 +5,6 @@
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_black_24dp"
         android:title="@string/edit"
-        app:showAsAction="always" />
+        app:actionLayout="@layout/edit_title_action_layout"
+        app:showAsAction="always|collapseActionView" />
 </menu>

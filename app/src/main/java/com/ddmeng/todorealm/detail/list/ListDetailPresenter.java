@@ -16,6 +16,7 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
     private final long listId;
     private RealmResults<TodoList> listResults;
     private boolean isInActionMode;
+    private TodoList list;
 
     ListDetailPresenter(TodoRepository todoRepository, long listId) {
         this.todoRepository = todoRepository;
@@ -25,14 +26,14 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
     @Override
     public void init() {
         listResults = todoRepository.queryList(listId);
-        TodoList list = listResults.get(0);
+        list = listResults.get(0);
         view.initViews(list.getTitle());
         view.bingTasksData(list.getTasks());
 
         listResults.addChangeListener(new RealmChangeListener<RealmResults<TodoList>>() {
             @Override
             public void onChange(RealmResults<TodoList> element) {
-                view.notifyDataChanged();
+                view.notifyDataChanged(list.getTitle());
             }
         });
     }
@@ -78,6 +79,18 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
     @Override
     public void deleteSelectedItems(List<Long> itemIds) {
         todoRepository.deleteTasks(itemIds);
+    }
+
+    @Override
+    public void onMenuItemActionExpanded() {
+        view.showEditActionText(list.getTitle());
+    }
+
+    @Override
+    public void onMenuItemActionCollapsed(String updatedTitle) {
+        if (!list.getTitle().equalsIgnoreCase(updatedTitle)) {
+            todoRepository.updateListTitle(listId, updatedTitle);
+        }
     }
 
     @Override
