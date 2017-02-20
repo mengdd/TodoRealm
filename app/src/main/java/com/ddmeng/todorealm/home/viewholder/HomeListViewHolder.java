@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
+import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.HomeListAdapter;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
@@ -38,7 +39,7 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder implements Selec
         this.list = list;
         multiSelector.bindHolder(this, getAdapterPosition());
         titleTextView.setText(list.getTitle());
-        int tasksCount = list.getTasks().size();
+        int tasksCount = getTodoTaskCount(list);
         numberTextView.setText(String.valueOf(tasksCount));
     }
 
@@ -66,5 +67,14 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder implements Selec
         itemView.setActivated(activated);
     }
 
+    private int getTodoTaskCount(TodoList list) {
+        int count = 0;
+        for (Task task : list.getTasks()) {
+            if (!task.isDone()) {
+                count++;
+            }
+        }
+        return count;
+    }
 
 }
