@@ -67,7 +67,6 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
 
     @Override
     public void onTaskItemCheckedChanged(Task task, boolean isDone) {
-        LogUtils.footPrint();
         todoRepository.updateTaskState(task.getId(), isDone);
     }
 
