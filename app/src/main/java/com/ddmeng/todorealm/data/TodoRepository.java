@@ -172,6 +172,12 @@ public class TodoRepository {
                 .sort("createdTime", Sort.ASCENDING);
     }
 
+    public RealmResults<Task> queryTask(final long taskId) {
+        return realm.where(Task.class)
+                .equalTo("id", taskId)
+                .findAll();
+    }
+
     public void getRealm() {
         realm = Realm.getDefaultInstance();
     }

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.detail.list.ListDetailFragment;
+import com.ddmeng.todorealm.detail.task.TaskDetailFragment;
 import com.ddmeng.todorealm.home.HomeListFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     public void showListDetailFragment(long todoListId) {
         ListDetailFragment listDetailFragment = ListDetailFragment.newInstance(todoListId);
         showFragment(listDetailFragment, ListDetailFragment.TAG);
+    }
+
+    public void showTaskDetailFragment(long taskId) {
+        TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance(taskId);
+        showFragment(taskDetailFragment, TaskDetailFragment.TAG);
     }
 
     private void showFragment(Fragment fragment, String tag) {

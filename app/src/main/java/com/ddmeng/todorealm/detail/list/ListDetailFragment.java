@@ -21,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.ddmeng.todorealm.MainActivity;
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
@@ -153,7 +154,7 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
 
     @Override
     public void showTaskDetail(Task task) {
-
+        ((MainActivity) (getActivity())).showTaskDetailFragment(task.getId());
     }
 
     @Override
