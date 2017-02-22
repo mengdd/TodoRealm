@@ -2,9 +2,12 @@ package com.ddmeng.todorealm.detail.list;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.utils.KeyboardUtils;
@@ -12,6 +15,7 @@ import com.ddmeng.todorealm.utils.KeyboardUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 
 public class EditActionViewHolder {
 
@@ -60,5 +64,14 @@ public class EditActionViewHolder {
     @OnClick(R.id.done_button)
     void onDoneButtonClicked() {
         menuItem.collapseActionView();
+    }
+
+    @OnEditorAction(R.id.edit_text_view)
+    boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            menuItem.collapseActionView();
+            return true;
+        }
+        return false;
     }
 }

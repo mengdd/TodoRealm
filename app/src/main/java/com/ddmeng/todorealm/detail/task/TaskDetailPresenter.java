@@ -25,7 +25,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
         task.addChangeListener(new RealmChangeListener<RealmModel>() {
             @Override
             public void onChange(RealmModel element) {
-
+                view.updateViews(task);
             }
         });
         view.initViews(task.getTitle());
@@ -34,6 +34,18 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
     @Override
     public void onDestroy() {
         task.removeChangeListeners();
+    }
+
+    @Override
+    public void onEditActionExpanded() {
+        view.showEditActionText(task.getTitle());
+    }
+
+    @Override
+    public void onEditActionCollapsed(String newTitle) {
+        if (!task.getTitle().equalsIgnoreCase(newTitle)) {
+            repository.updateTaskTitle(task.getId(), newTitle);
+        }
     }
 
     @Override

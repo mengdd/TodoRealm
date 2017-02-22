@@ -35,8 +35,10 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
             @Override
             public void onChange(RealmResults<TodoList> element) {
                 LogUtils.d("tasks size: " + element.get(0).getTasks().size());
-                bindData();
-                view.notifyDataChanged(list.getTitle());
+                if (view != null) {
+                    bindData();
+                    view.notifyDataChanged(list.getTitle());
+                }
             }
         });
     }

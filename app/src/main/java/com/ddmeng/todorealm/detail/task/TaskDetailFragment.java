@@ -3,15 +3,21 @@ package com.ddmeng.todorealm.detail.task;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
+import com.ddmeng.todorealm.data.models.Task;
+import com.ddmeng.todorealm.detail.list.EditActionViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +34,7 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     private static final String ARG_TASK_ID = "task_id";
     private long taskId;
     private TaskDetailContract.Presenter presenter;
+    private EditActionViewHolder editActionViewHolder;
 
     public TaskDetailFragment() {
     }
@@ -63,11 +70,52 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     }
 
     @Override
-    public void initViews(String title) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.task_detail_options_menu, menu);
+        MenuItem editItem = menu.findItem(R.id.action_edit);
+        View editActionView = MenuItemCompat.getActionView(editItem);
+        editActionViewHolder = new EditActionViewHolder(editActionView, editItem);
+        MenuItemCompat.setOnActionExpandListener(editItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                presenter.onEditActionExpanded();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                presenter.onEditActionCollapsed(editActionViewHolder.getCurrentText());
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            getFragmentManager().popBackStack();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void initViews(final String title) {
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         toolbar.setTitle(title);
         titleTextView.setText(title);
+    }
+
+    @Override
+    public void updateViews(Task task) {
+        toolbar.setTitle(task.getTitle());
+        titleTextView.setText(task.getTitle());
+    }
+
+    @Override
+    public void showEditActionText(String title) {
+        editActionViewHolder.showCurrentText(title);
     }
 
     @Override
