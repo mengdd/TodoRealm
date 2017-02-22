@@ -2,7 +2,9 @@ package com.ddmeng.todorealm.detail.task;
 
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
+import com.ddmeng.todorealm.utils.LogUtils;
 
+import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
@@ -25,6 +27,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
         task.addChangeListener(new RealmChangeListener<RealmModel>() {
             @Override
             public void onChange(RealmModel element) {
+                task.getId();
                 view.updateViews(task);
             }
         });
@@ -46,6 +49,24 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
         if (!task.getTitle().equalsIgnoreCase(newTitle)) {
             repository.updateTaskTitle(task.getId(), newTitle);
         }
+    }
+
+    @Override
+    public void onDeleteMenuItemClicked() {
+        repository.deleteTask(task.getId(), new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                if (view != null) {
+                    view.exit();
+                }
+
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                LogUtils.e("TaskDetail", "Delete failed", error);
+            }
+        });
     }
 
     @Override

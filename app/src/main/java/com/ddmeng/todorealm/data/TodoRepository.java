@@ -138,6 +138,16 @@ public class TodoRepository {
         });
     }
 
+    public void deleteTask(final long taskId, Realm.Transaction.OnSuccess onSuccess, Realm.Transaction.OnError onError) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Task> toDeleteTasks = realm.where(Task.class).equalTo("id", taskId).findAll();
+                toDeleteTasks.deleteAllFromRealm();
+            }
+        }, onSuccess, onError);
+    }
+
     public void deleteTasks(@NonNull final List<Long> taskIds) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override

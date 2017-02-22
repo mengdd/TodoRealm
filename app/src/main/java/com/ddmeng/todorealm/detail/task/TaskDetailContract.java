@@ -11,6 +11,8 @@ public interface TaskDetailContract {
         void showEditActionText(String title);
 
         void updateViews(Task task);
+
+        void exit();
     }
 
     interface Presenter extends BasePresenter<TaskDetailContract.View> {
@@ -21,5 +23,7 @@ public interface TaskDetailContract {
         void onEditActionExpanded();
 
         void onEditActionCollapsed(String newTitle);
+
+        void onDeleteMenuItemClicked();
     }
 }

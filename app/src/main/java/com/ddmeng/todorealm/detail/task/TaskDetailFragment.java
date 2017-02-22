@@ -92,9 +92,17 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            getFragmentManager().popBackStack();
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                exit();
+                return true;
+            }
+            case R.id.action_delete: {
+                presenter.onDeleteMenuItemClicked();
+                return true;
+            }
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -128,5 +136,10 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     public void onDestroy() {
         presenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void exit() {
+        getFragmentManager().popBackStack();
     }
 }
