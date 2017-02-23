@@ -18,6 +18,8 @@ interface HomeListContract {
 
         void showAddNewList();
 
+        void showAddNewTask();
+
         void showListDetail(TodoList list);
 
         void startActionMode();
@@ -41,6 +43,8 @@ interface HomeListContract {
         void onDestroyActionMode();
 
         void deleteSelectedItems(List<Long> itemIds);
+
+        void onFloatingActionButtonClicked();
 
         void onDestroy();
     }

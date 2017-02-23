@@ -9,6 +9,7 @@ import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.detail.list.ListDetailFragment;
 import com.ddmeng.todorealm.detail.task.TaskDetailFragment;
 import com.ddmeng.todorealm.home.HomeListFragment;
+import com.ddmeng.todorealm.home.add.task.AddTaskFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
     public void showTaskDetailFragment(long taskId) {
         TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance(taskId);
         showFragment(taskDetailFragment, TaskDetailFragment.TAG);
+    }
+
+    public void showAddTaskFragment() {
+        AddTaskFragment addTaskFragment = new AddTaskFragment();
+        showFragment(addTaskFragment, AddTaskFragment.TAG);
     }
 
     private void showFragment(Fragment fragment, String tag) {

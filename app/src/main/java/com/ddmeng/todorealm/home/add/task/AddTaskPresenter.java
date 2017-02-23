@@ -1,4 +1,4 @@
-package com.ddmeng.todorealm.home.add.list;
+package com.ddmeng.todorealm.home.add.task;
 
 import android.text.TextUtils;
 
@@ -6,44 +6,46 @@ import com.ddmeng.todorealm.data.TodoRepository;
 
 import io.realm.Realm;
 
-class AddListPresenter implements AddListContract.Presenter {
-
-    private AddListContract.View view;
+public class AddTaskPresenter implements AddTaskContract.Presenter {
+    private AddTaskContract.View view;
     private TodoRepository repository;
 
-    AddListPresenter(TodoRepository todoRepository) {
-        this.repository = todoRepository;
+    public AddTaskPresenter(TodoRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public void onDoneButtonClick(String title) {
-        if (!TextUtils.isEmpty(title)) {
-            repository.addNewList(title, new Realm.Transaction.OnSuccess() {
+    public void init() {
+        view.initViews();
+    }
+
+    @Override
+    public void onDoneClicked(String taskTitle, long listId) {
+        if (!TextUtils.isEmpty(taskTitle)) {
+            repository.addNewTask(listId, taskTitle, new Realm.Transaction.OnSuccess() {
                 @Override
                 public void onSuccess() {
                     if (view != null) {
                         view.exit();
                     }
+
                 }
             }, new Realm.Transaction.OnError() {
                 @Override
                 public void onError(Throwable error) {
-                    if (view != null) {
-                        view.exit();
-                    }
+
                 }
             });
         }
-
     }
 
     @Override
-    public void onCancelButtonClick() {
+    public void onCloseClicked() {
         view.exit();
     }
 
     @Override
-    public void attachView(AddListContract.View view) {
+    public void attachView(AddTaskContract.View view) {
         this.view = view;
     }
 

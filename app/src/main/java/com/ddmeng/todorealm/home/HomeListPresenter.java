@@ -65,6 +65,11 @@ class HomeListPresenter implements HomeListContract.Presenter {
     }
 
     @Override
+    public void onFloatingActionButtonClicked() {
+        view.showAddNewTask();
+    }
+
+    @Override
     public void onListItemClicked(TodoList list) {
         view.showListDetail(list);
     }

@@ -25,6 +25,7 @@ import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.realm.RealmResults;
 
 public class HomeListFragment extends Fragment implements HomeListContract.View, HomeListAdapter.HomeListCallback {
@@ -90,6 +91,11 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
     public void showAddNewList() {
         AddListDialogFragment addListDialogFragment = new AddListDialogFragment();
         addListDialogFragment.show(getChildFragmentManager(), AddListDialogFragment.TAG);
+    }
+
+    @Override
+    public void showAddNewTask() {
+        ((MainActivity) getActivity()).showAddTaskFragment();
     }
 
     @Override
@@ -167,5 +173,10 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
         multiSelector.setSelectable(false);
         multiSelector.clearSelections();
         actionMode = null;
+    }
+
+    @OnClick(R.id.floating_action_button)
+    void onFloatingActionButtonClicked() {
+        presenter.onFloatingActionButtonClicked();
     }
 }

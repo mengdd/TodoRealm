@@ -20,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
+import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.utils.LogUtils;
 
 import butterknife.BindView;
@@ -100,7 +101,7 @@ public class AddListDialogFragment extends BottomSheetDialogFragment implements 
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         }
 
-        presenter = new AddListPresenter();
+        presenter = new AddListPresenter(TodoRepository.getInstance());
         presenter.attachView(this);
     }
 
@@ -130,7 +131,7 @@ public class AddListDialogFragment extends BottomSheetDialogFragment implements 
     }
 
     @Override
-    public void finish() {
+    public void exit() {
         dismiss();
     }
 

@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ddmeng.todorealm.home.add.task.AddTaskFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary" />
+
+    <EditText
+        android:id="@+id/new_task_edit_text"
+        style="@style/ListItemEditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/add_a_task_to_list" />
+
+    <TextView
+        android:id="@+id/list_title"
+        style="@style/AddTaskItemStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_expand_more_black_24dp"
+        android:drawableLeft="@drawable/ic_list_black_24dp"
+        android:drawableRight="@drawable/ic_expand_more_black_24dp"
+        android:drawableStart="@drawable/ic_list_black_24dp"
+        android:ellipsize="end" />
+
+</LinearLayout>

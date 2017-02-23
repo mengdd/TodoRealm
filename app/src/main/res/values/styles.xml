@@ -29,13 +29,11 @@
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:drawablePadding">@dimen/list_item_drawable_padding</item>
         <item name="android:textSize">@dimen/list_item_text_size</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:inputType">text</item>
     </style>
 
-    <style name="DetailItemStyle">
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
+    <style name="DetailItemStyle" parent="ListItemContainerStyle">
         <item name="android:drawablePadding">@dimen/list_item_drawable_padding</item>
     </style>
 
@@ -43,6 +41,10 @@
         <item name="android:textSize">@dimen/list_item_text_size</item>
         <item name="android:imeOptions">actionDone</item>
         <item name="android:inputType">text</item>
+    </style>
+
+    <style name="AddTaskItemStyle" parent="DetailItemStyle">
+        <item name="android:textSize">@dimen/list_item_text_size</item>
     </style>
 
 </resources>
