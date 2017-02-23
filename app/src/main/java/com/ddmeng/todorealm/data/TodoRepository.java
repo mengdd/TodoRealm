@@ -201,6 +201,20 @@ public class TodoRepository {
         });
     }
 
+    public void updateTaskNote(final long taskId, final String newNote) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Task> results = realm.where(Task.class).equalTo("id", taskId).findAll();
+                if (results.size() > 0) {
+                    Task task = results.get(0);
+                    task.setNote(newNote);
+                    realm.copyToRealmOrUpdate(task);
+                }
+            }
+        });
+    }
+
     public RealmResults<Task> queryTasks(final long listId, final boolean isDone) {
         return realm.where(Task.class)
                 .equalTo("listId", listId)

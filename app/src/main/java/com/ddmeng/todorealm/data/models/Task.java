@@ -10,6 +10,7 @@ public class Task extends RealmObject {
     private boolean isDone;
     private long listId;
     private long createdTime;
+    private String note;
 
     public long getId() {
         return id;
@@ -49,5 +50,13 @@ public class Task extends RealmObject {
 
     public void setCreatedTime(long createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

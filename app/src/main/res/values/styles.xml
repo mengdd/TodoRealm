@@ -31,4 +31,18 @@
         <item name="android:textSize">@dimen/list_item_text_size</item>
     </style>
 
+    <style name="DetailItemStyle">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:drawablePadding">@dimen/list_item_drawable_padding</item>
+    </style>
+
+    <style name="DetailEditTextStyle">
+        <item name="android:textSize">@dimen/list_item_text_size</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:inputType">text</item>
+    </style>
+
 </resources>

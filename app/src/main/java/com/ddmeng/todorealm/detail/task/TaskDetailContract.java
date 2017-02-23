@@ -6,7 +6,7 @@ import com.ddmeng.todorealm.data.models.Task;
 
 public interface TaskDetailContract {
     interface View extends BaseView {
-        void initViews(String title);
+        void initViews();
 
         void showEditActionText(String title);
 
@@ -25,5 +25,7 @@ public interface TaskDetailContract {
         void onEditActionCollapsed(String newTitle);
 
         void onDeleteMenuItemClicked();
+
+        void onNoteEditorActionDone(String newNote);
     }
 }

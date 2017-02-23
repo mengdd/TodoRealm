@@ -13,4 +13,6 @@
     <string name="add_a_to_do_task">Add a to-do task</string>
     <string name="completed_tasks">Completed Tasks</string>
     <string name="show_completed_tasks">Show Completed Tasks</string>
+    <string name="title">Title</string>
+    <string name="add_a_note">Add a note</string>
 </resources>

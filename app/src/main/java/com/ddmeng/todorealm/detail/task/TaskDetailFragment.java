@@ -6,21 +6,25 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.detail.EditActionViewHolder;
+import com.ddmeng.todorealm.utils.KeyboardUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnEditorAction;
 
 
 public class TaskDetailFragment extends Fragment implements TaskDetailContract.View {
@@ -28,8 +32,8 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     public static final String TAG = "TaskDetailFragment";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.task_detail_title)
-    TextView titleTextView;
+    @BindView(R.id.task_detail_note)
+    TextView noteView;
 
     private static final String ARG_TASK_ID = "task_id";
     private long taskId;
@@ -107,18 +111,16 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     }
 
     @Override
-    public void initViews(final String title) {
+    public void initViews() {
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        toolbar.setTitle(title);
-        titleTextView.setText(title);
     }
 
     @Override
-    public void updateViews(Task task) {
+    public void updateViews(final Task task) {
         toolbar.setTitle(task.getTitle());
-        titleTextView.setText(task.getTitle());
+        noteView.setText(task.getNote());
     }
 
     @Override
@@ -141,5 +143,16 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     @Override
     public void exit() {
         getFragmentManager().popBackStack();
+    }
+
+    @OnEditorAction(R.id.task_detail_note)
+    boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            KeyboardUtils.hideKeyboard(view.getContext(), view);
+            view.clearFocus();
+            presenter.onNoteEditorActionDone(view.getText().toString());
+            return true;
+        }
+        return false;
     }
 }

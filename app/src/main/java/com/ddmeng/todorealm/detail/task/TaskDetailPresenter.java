@@ -31,7 +31,8 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
                 view.updateViews(task);
             }
         });
-        view.initViews(task.getTitle());
+        view.initViews();
+        view.updateViews(task);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void onEditActionCollapsed(String newTitle) {
-        if (!task.getTitle().equalsIgnoreCase(newTitle)) {
+        if (!task.getTitle().equals(newTitle)) {
             repository.updateTaskTitle(task.getId(), newTitle);
         }
     }
@@ -67,6 +68,14 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
                 LogUtils.e("TaskDetail", "Delete failed", error);
             }
         });
+    }
+
+    @Override
+    public void onNoteEditorActionDone(String newNote) {
+        LogUtils.d("getNote: " + task.getNote() + ", newNote: " + newNote);
+        if ((task.getNote() == null && newNote != null) || !task.getNote().equals(newNote)) {
+            repository.updateTaskNote(task.getId(), newNote);
+        }
     }
 
     @Override

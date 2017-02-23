@@ -70,6 +70,7 @@ public class EditActionViewHolder {
     boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             menuItem.collapseActionView();
+            KeyboardUtils.hideKeyboard(view.getContext(), view);
             return true;
         }
         return false;
