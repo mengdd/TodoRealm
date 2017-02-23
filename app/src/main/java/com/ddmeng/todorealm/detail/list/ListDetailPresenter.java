@@ -9,13 +9,13 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
 
 class ListDetailPresenter implements ListDetailContract.Presenter {
     private ListDetailContract.View view;
     private final TodoRepository todoRepository;
     private final long listId;
-    private RealmResults<TodoList> listResults;
     private boolean isInActionMode;
     private TodoList list;
 
@@ -26,15 +26,14 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
 
     @Override
     public void init() {
-        listResults = todoRepository.queryList(listId);
+        RealmResults<TodoList> listResults = todoRepository.queryList(listId);
         list = listResults.get(0);
         view.initViews(list.getTitle());
 
         bindData();
-        listResults.addChangeListener(new RealmChangeListener<RealmResults<TodoList>>() {
+        list.addChangeListener(new RealmChangeListener<RealmModel>() {
             @Override
-            public void onChange(RealmResults<TodoList> element) {
-                LogUtils.d("tasks size: " + element.get(0).getTasks().size());
+            public void onChange(RealmModel element) {
                 if (view != null) {
                     bindData();
                     view.notifyDataChanged(list.getTitle());
@@ -97,15 +96,33 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
     }
 
     @Override
-    public void onMenuItemActionExpanded() {
+    public void onEditActionExpanded() {
         view.showEditActionText(list.getTitle());
     }
 
     @Override
-    public void onMenuItemActionCollapsed(String updatedTitle) {
+    public void onEditActionCollapsed(String updatedTitle) {
         if (!list.getTitle().equalsIgnoreCase(updatedTitle)) {
             todoRepository.updateListTitle(listId, updatedTitle);
         }
+    }
+
+    @Override
+    public void onDeleteMenuItemClicked() {
+        todoRepository.deleteList(listId, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                if (view != null) {
+                    view.exit();
+                }
+
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                LogUtils.e("Delete", "delete list failed", error);
+            }
+        });
     }
 
     @Override
@@ -120,6 +137,6 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
 
     @Override
     public void onDestroy() {
-        listResults.removeChangeListeners();
+        list.removeChangeListeners();
     }
 }

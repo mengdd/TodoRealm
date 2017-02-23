@@ -25,6 +25,7 @@ import com.ddmeng.todorealm.MainActivity;
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
+import com.ddmeng.todorealm.detail.EditActionViewHolder;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 import com.ddmeng.todorealm.utils.LogUtils;
 
@@ -108,7 +109,7 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 LogUtils.footPrint();
-                presenter.onMenuItemActionExpanded();
+                presenter.onEditActionExpanded();
 
                 return true;
             }
@@ -116,7 +117,7 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 LogUtils.footPrint();
-                presenter.onMenuItemActionCollapsed(editActionViewHolder.getCurrentText());
+                presenter.onEditActionCollapsed(editActionViewHolder.getCurrentText());
                 return true;
             }
         });
@@ -129,9 +130,15 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            LogUtils.d("home button clicked <-");
-            getFragmentManager().popBackStack();
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                exit();
+                return true;
+            }
+            case R.id.action_delete: {
+                presenter.onDeleteMenuItemClicked();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -235,5 +242,10 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     @Override
     public void onTaskItemLongClicked(Task task) {
         presenter.onTaskItemLongClicked(task);
+    }
+
+    @Override
+    public void exit() {
+        getFragmentManager().popBackStack();
     }
 }

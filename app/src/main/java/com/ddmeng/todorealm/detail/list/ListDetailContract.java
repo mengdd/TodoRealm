@@ -24,6 +24,8 @@ interface ListDetailContract {
         void onExitActionMode();
 
         void showEditActionText(CharSequence text);
+
+        void exit();
     }
 
     interface Presenter extends BasePresenter<ListDetailContract.View> {
@@ -44,8 +46,10 @@ interface ListDetailContract {
 
         void deleteSelectedItems(List<Long> itemIds);
 
-        void onMenuItemActionExpanded();
+        void onEditActionExpanded();
 
-        void onMenuItemActionCollapsed(String text);
+        void onEditActionCollapsed(String text);
+
+        void onDeleteMenuItemClicked();
     }
 }

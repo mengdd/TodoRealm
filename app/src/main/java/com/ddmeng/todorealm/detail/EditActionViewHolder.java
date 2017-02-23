@@ -1,4 +1,4 @@
-package com.ddmeng.todorealm.detail.list;
+package com.ddmeng.todorealm.detail;
 
 import android.text.Editable;
 import android.text.TextWatcher;

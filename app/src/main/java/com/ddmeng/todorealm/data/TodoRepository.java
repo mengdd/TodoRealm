@@ -83,6 +83,16 @@ public class TodoRepository {
         });
     }
 
+    public void deleteList(final long listId, Realm.Transaction.OnSuccess onSuccess, Realm.Transaction.OnError onError) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<TodoList> toDeleteLists = realm.where(TodoList.class).equalTo("id", listId).findAll();
+                toDeleteLists.deleteAllFromRealm();
+            }
+        }, onSuccess, onError);
+    }
+
     public void updateListTitle(final long listId, final String newTitle) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override

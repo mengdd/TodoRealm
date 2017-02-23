@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
-import com.ddmeng.todorealm.detail.list.EditActionViewHolder;
+import com.ddmeng.todorealm.detail.EditActionViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
