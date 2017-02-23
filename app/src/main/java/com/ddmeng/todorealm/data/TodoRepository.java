@@ -74,11 +74,12 @@ public class TodoRepository {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                LogUtils.d("delete: " + listIds);
                 Long[] ids = listIds.toArray(new Long[listIds.size()]);
                 RealmResults<TodoList> toDeleteLists = realm.where(TodoList.class).in("id", ids).findAll();
-                LogUtils.d("queryed results: " + toDeleteLists.size());
-                toDeleteLists.deleteAllFromRealm();
+                for (TodoList list : toDeleteLists) {
+                    list.getTasks().deleteAllFromRealm();
+                    list.deleteFromRealm();
+                }
             }
         });
     }
@@ -88,7 +89,9 @@ public class TodoRepository {
             @Override
             public void execute(Realm realm) {
                 RealmResults<TodoList> toDeleteLists = realm.where(TodoList.class).equalTo("id", listId).findAll();
-                toDeleteLists.deleteAllFromRealm();
+                TodoList list = toDeleteLists.get(0);
+                list.getTasks().deleteAllFromRealm();
+                list.deleteFromRealm();
             }
         }, onSuccess, onError);
     }
