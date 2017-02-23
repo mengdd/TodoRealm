@@ -10,21 +10,27 @@ An Android Todo-list sample application to play with Realm.
     - [x] Edit a list.
     - [x] Click to show list detail.
     - [ ] FAB to add a task and choose a target list.
-- [ ] List Detail: List of tasks.
+- [x] List Detail: List of tasks.
     - [x] Query all tasks in this list.
     - [x] Add a new task.
     - [x] Delete a task.
     - [x] Mark a task as done.
-    - [ ] Click to show task detail.
+    - [x] Click to show task detail.
     - [x] Show all completed tasks.
     - [x] Mark a completed task as to-do.
 - [ ] Task Detail.
-    - [ ] Edit a task.
+    - [x] Edit a task's title.
+    - [x] Edit a task's note.
+    - [ ] Edit a task's due date.
 
 ### Features backlog
+- [ ] About screen.
+- [ ] Confirm before deleting.
 - [ ] Task priority, mark a task as important, urgent or current doing.
-- [ ] Settings: change the color theme of the app.
 - [ ] Drag to change the item order in list.
+- [ ] Settings screen:
+    - [ ] Change the color theme of the app.
+    - [ ] Send feedback.
 
 
 ## References
