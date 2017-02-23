@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ddmeng.todorealm.home.add.AddListDialogFragment">
+    tools:context="com.ddmeng.todorealm.home.add.list.AddListDialogFragment">
 
 
     <android.support.design.widget.TextInputLayout

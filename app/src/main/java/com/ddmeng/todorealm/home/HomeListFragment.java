@@ -20,7 +20,7 @@ import com.ddmeng.todorealm.MainActivity;
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.TodoList;
-import com.ddmeng.todorealm.home.add.AddListDialogFragment;
+import com.ddmeng.todorealm.home.add.list.AddListDialogFragment;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
 import butterknife.BindView;
