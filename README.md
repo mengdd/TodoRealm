@@ -18,12 +18,13 @@ An Android Todo-list sample application to play with Realm.
     - [x] Click to show task detail.
     - [x] Show all completed tasks.
     - [x] Mark a completed task as to-do.
-- [ ] Task Detail.
+- [x] Task Detail.
     - [x] Edit a task's title.
     - [x] Edit a task's note.
-    - [ ] Edit a task's due date.
+
 
 ### Features backlog
+- [ ] Add due date to task.
 - [ ] About screen.
 - [ ] Confirm before deleting.
 - [ ] Task priority, mark a task as important, urgent or current doing.
