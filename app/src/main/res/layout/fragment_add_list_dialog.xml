@@ -7,16 +7,16 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout"
+        style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/input_edit_text"
+            style="@style/TextInputEditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/new_list_name"
-            android:imeOptions="actionDone"
-            android:inputType="text" />
+            android:hint="@string/new_list_name" />
     </android.support.design.widget.TextInputLayout>
 
     <LinearLayout

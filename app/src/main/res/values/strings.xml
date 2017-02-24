@@ -9,11 +9,14 @@
     <string name="done">Done</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="error_hint_title_can_not_be_empty">Title can not be empty</string>
+    <string name="error_hint_title_can_not_be_empty">Title can not be empty!</string>
     <string name="add_a_to_do_task">Add a to-do task</string>
     <string name="completed_tasks">Completed Tasks</string>
     <string name="show_completed_tasks">Show Completed Tasks</string>
     <string name="title">Title</string>
     <string name="add_a_note">Add a note</string>
-    <string name="add_a_task_to_list">Add a todo task to \"%s1\"</string>
+    <string name="hint_add_a_task_to_list">Add a todo task to \"%1s\"</string>
+    <string name="hint_add_a_task">Add a todo task</string>
+    <string name="select_a_list">Select a list…</string>
+    <string name="create_a_list">Create a new list…</string>
 </resources>
