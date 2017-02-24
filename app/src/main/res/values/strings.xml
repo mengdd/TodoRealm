@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">TodoRealm</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_list">Home List</string>
     <string name="create_list">Create List</string>
     <string name="new_list_name">New List Name</string>
@@ -15,8 +14,8 @@
     <string name="show_completed_tasks">Show Completed Tasks</string>
     <string name="title">Title</string>
     <string name="add_a_note">Add a note</string>
-    <string name="hint_add_a_task_to_list">Add a todo task to \"%1s\"</string>
-    <string name="hint_add_a_task">Add a todo task</string>
+    <string name="hint_add_a_task_to_list">Add a to-do task to \"%1s\"</string>
+    <string name="hint_add_a_task">Add a to-do task</string>
     <string name="select_a_list">Select a list…</string>
     <string name="create_a_list">Create a new list…</string>
 </resources>

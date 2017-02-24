@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TodoRealm</string>
+
+    <string name="home_list">主页列表</string>
+    <string name="create_list">创建列表</string>
+    <string name="new_list_name">新列表名</string>
+    <string name="cancel">取消</string>
+    <string name="done">好</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="error_hint_title_can_not_be_empty">标题不能为空!</string>
+    <string name="add_a_to_do_task">加一个任务</string>
+    <string name="completed_tasks">已完成任务</string>
+    <string name="show_completed_tasks">显示已完成任务</string>
+    <string name="title">标题</string>
+    <string name="add_a_note">备注</string>
+    <string name="hint_add_a_task_to_list">添加一个任务到\"%1s\"列表</string>
+    <string name="hint_add_a_task">添加一个任务</string>
+    <string name="select_a_list">选择一个列表…</string>
+    <string name="create_a_list">创建一个列表…</string>
+</resources>
