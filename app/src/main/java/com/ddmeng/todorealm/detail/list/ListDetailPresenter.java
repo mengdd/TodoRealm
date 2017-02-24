@@ -1,5 +1,7 @@
 package com.ddmeng.todorealm.detail.list;
 
+import android.text.TextUtils;
+
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.data.models.TodoList;
@@ -50,20 +52,22 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
 
     @Override
     public void addNewTask(String taskTitle) {
-        todoRepository.addNewTask(listId, taskTitle, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                if (view != null) {
-                    view.clearInput();
+        if (!TextUtils.isEmpty(taskTitle)) {
+            todoRepository.addNewTask(listId, taskTitle, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    if (view != null) {
+                        view.clearInput();
+                    }
+
                 }
+            }, new Realm.Transaction.OnError() {
+                @Override
+                public void onError(Throwable error) {
 
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override

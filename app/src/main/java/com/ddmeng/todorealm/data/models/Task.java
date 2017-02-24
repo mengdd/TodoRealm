@@ -2,10 +2,12 @@ package com.ddmeng.todorealm.data.models;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class Task extends RealmObject {
     @PrimaryKey
     private long id;
+    @Required
     private String title;
     private boolean isDone;
     private long listId;

@@ -3,10 +3,12 @@ package com.ddmeng.todorealm.data.models;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class TodoList extends RealmObject {
     @PrimaryKey
     private long id;
+    @Required
     private String title;
     private RealmList<Task> tasks;
     private long createdTime;
