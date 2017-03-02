@@ -18,4 +18,8 @@
     <string name="hint_add_a_task">Add a to-do task</string>
     <string name="select_a_list">Select a list…</string>
     <string name="create_a_list">Create a new list…</string>
+    <string name="delete_list_title">Delete this list?</string>
+    <string name="delete_task_title">Delete this task?</string>
+    <string name="delete_items_title">Delete selected items?</string>
+    <string name="ok">OK</string>
 </resources>

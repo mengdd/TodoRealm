@@ -1,6 +1,7 @@
 package com.ddmeng.todorealm.detail.list;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.detail.EditActionViewHolder;
+import com.ddmeng.todorealm.ui.dialog.HintDialog;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 import com.ddmeng.todorealm.utils.LogUtils;
 
@@ -136,7 +138,16 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
                 return true;
             }
             case R.id.action_delete: {
-                presenter.onDeleteMenuItemClicked();
+                new HintDialog.Builder(getContext())
+                        .setTitle(R.string.delete_list_title)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                presenter.onDeleteMenuItemClicked();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show(getFragmentManager());
                 return true;
             }
         }
@@ -180,11 +191,20 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
             }
 
             @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_delete: {
-                        presenter.deleteSelectedItems(multiSelector.getSelectedItemIds());
-                        mode.finish();
+                        new HintDialog.Builder(getContext())
+                                .setTitle(R.string.delete_items_title)
+                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        presenter.deleteSelectedItems(multiSelector.getSelectedItemIds());
+                                        mode.finish();
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel, null)
+                                .show(getFragmentManager());
                         return true;
                     }
                     default: {

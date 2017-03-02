@@ -1,6 +1,7 @@
 package com.ddmeng.todorealm.home;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.add.list.AddListDialogFragment;
+import com.ddmeng.todorealm.ui.dialog.HintDialog;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
 import butterknife.BindView;
@@ -142,11 +144,20 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
             }
 
             @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_delete: {
-                        presenter.deleteSelectedItems(multiSelector.getSelectedItemIds());
-                        mode.finish();
+                        new HintDialog.Builder(getContext())
+                                .setTitle(R.string.delete_items_title)
+                                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        presenter.deleteSelectedItems(multiSelector.getSelectedItemIds());
+                                        mode.finish();
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel, null)
+                                .show(getFragmentManager());
                         return true;
                     }
                     default: {
