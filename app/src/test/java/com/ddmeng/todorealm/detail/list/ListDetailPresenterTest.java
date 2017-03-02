@@ -56,14 +56,14 @@ public class ListDetailPresenterTest {
 
         presenter.onTaskItemLongClicked(task);
 
-        verify(view).startActionMode();
+        verify(view).startDeleteActionMode();
     }
 
     @Test
     public void shouldInvokeOnExitWhenActionModeDestroyed() throws Exception {
-        presenter.onDestroyActionMode();
+        presenter.onDestroyDeleteActionMode();
 
-        verify(view).onExitActionMode();
+        verify(view).onExitDeleteActionMode();
     }
 
     @Test

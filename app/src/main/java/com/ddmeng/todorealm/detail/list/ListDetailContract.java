@@ -19,9 +19,9 @@ interface ListDetailContract {
 
         void showTaskDetail(Task task);
 
-        void startActionMode();
+        void startDeleteActionMode();
 
-        void onExitActionMode();
+        void onExitDeleteActionMode();
 
         void showEditActionText(CharSequence text);
 
@@ -42,7 +42,7 @@ interface ListDetailContract {
 
         void onTaskItemLongClicked(Task task);
 
-        void onDestroyActionMode();
+        void onDestroyDeleteActionMode();
 
         void deleteSelectedItems(List<Long> itemIds);
 

@@ -84,14 +84,14 @@ class ListDetailPresenter implements ListDetailContract.Presenter {
     public void onTaskItemLongClicked(Task task) {
         if (!isInActionMode) {
             isInActionMode = true;
-            view.startActionMode();
+            view.startDeleteActionMode();
         }
     }
 
     @Override
-    public void onDestroyActionMode() {
+    public void onDestroyDeleteActionMode() {
         isInActionMode = false;
-        view.onExitActionMode();
+        view.onExitDeleteActionMode();
     }
 
     @Override

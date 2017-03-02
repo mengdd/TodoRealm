@@ -176,7 +176,7 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
     }
 
     @Override
-    public void startActionMode() {
+    public void startDeleteActionMode() {
         actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -215,13 +215,13 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-                presenter.onDestroyActionMode();
+                presenter.onDestroyDeleteActionMode();
             }
         });
     }
 
     @Override
-    public void onExitActionMode() {
+    public void onExitDeleteActionMode() {
         multiSelector.setSelectable(false);
         multiSelector.clearSelections();
         actionMode = null;
