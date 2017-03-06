@@ -2,9 +2,11 @@ package com.ddmeng.todorealm.detail.list;
 
 
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -27,6 +29,7 @@ import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.Task;
 import com.ddmeng.todorealm.detail.EditActionViewHolder;
+import com.ddmeng.todorealm.ui.decoration.DividerDecoration;
 import com.ddmeng.todorealm.ui.dialog.HintDialog;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 import com.ddmeng.todorealm.utils.LogUtils;
@@ -97,6 +100,9 @@ public class ListDetailFragment extends Fragment implements ListDetailContract.V
         multiSelector = new MultiSelector();
         adapter = new TaskListAdapter(this, multiSelector);
         tasksList.setAdapter(adapter);
+        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.row_divider);
+        DividerDecoration dividerDecoration = new DividerDecoration(dividerDrawable, adapter);
+        tasksList.addItemDecoration(dividerDecoration);
 
     }
 

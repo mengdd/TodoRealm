@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.models.Task;
+import com.ddmeng.todorealm.ui.decoration.DividerDecoration;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements CompletedToggleViewHolder.CompletedToggleCallback {
+public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements CompletedToggleViewHolder.CompletedToggleCallback, DividerDecoration.DividerAdapter {
     private static final int VIEW_TYPE_TASK = 0;
     private static final int VIEW_TYPE_COMPLETED_TOGGLE = 1;
     private List<Task> taskList;
@@ -98,6 +100,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onToggleCheckedChanged(boolean isToggleOn) {
         isShowingDone = isToggleOn;
+    }
+
+    @Override
+    public boolean hasDivider(int position) {
+        return position != todoTasksCount && position != getItemCount() - 1;
     }
 
     public interface TaskListCallback {

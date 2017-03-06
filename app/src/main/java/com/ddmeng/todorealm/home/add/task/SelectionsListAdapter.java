@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 
 import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.models.TodoList;
+import com.ddmeng.todorealm.ui.decoration.DividerDecoration;
 
 import java.util.List;
 
-public class SelectionsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SelectionsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements DividerDecoration.DividerAdapter {
     private List<TodoList> selections;
     private SelectListCallback callback;
 
@@ -36,6 +37,11 @@ public class SelectionsListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemCount() {
         return selections != null ? selections.size() : 0;
+    }
+
+    @Override
+    public boolean hasDivider(int position) {
+        return position != getItemCount() - 1;
     }
 
     public interface SelectListCallback {

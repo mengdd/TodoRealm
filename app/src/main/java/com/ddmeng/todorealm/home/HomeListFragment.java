@@ -2,9 +2,11 @@ package com.ddmeng.todorealm.home;
 
 
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +24,7 @@ import com.ddmeng.todorealm.R;
 import com.ddmeng.todorealm.data.TodoRepository;
 import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.add.list.AddListDialogFragment;
+import com.ddmeng.todorealm.ui.decoration.DividerDecoration;
 import com.ddmeng.todorealm.ui.dialog.HintDialog;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
@@ -84,8 +87,12 @@ public class HomeListFragment extends Fragment implements HomeListContract.View,
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
         homeList.setLayoutManager(new LinearLayoutManager(getContext()));
+
         homeListAdapter = new HomeListAdapter(this, multiSelector);
         homeList.setAdapter(homeListAdapter);
+        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.row_divider);
+        DividerDecoration dividerDecoration = new DividerDecoration(dividerDrawable, homeListAdapter);
+        homeList.addItemDecoration(dividerDecoration);
     }
 
 

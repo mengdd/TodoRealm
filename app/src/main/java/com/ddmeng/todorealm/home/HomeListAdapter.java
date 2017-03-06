@@ -10,11 +10,13 @@ import com.ddmeng.todorealm.data.models.TodoList;
 import com.ddmeng.todorealm.home.viewholder.HomeFooterViewHolder;
 import com.ddmeng.todorealm.home.viewholder.HomeHeaderViewHolder;
 import com.ddmeng.todorealm.home.viewholder.HomeListViewHolder;
+import com.ddmeng.todorealm.ui.decoration.DividerDecoration;
 import com.ddmeng.todorealm.ui.multiselect.MultiSelector;
 
 import java.util.List;
 
-public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements DividerDecoration.DividerAdapter {
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_LIST = 1;
     private static final int VIEW_TYPE_FOOTER = 2;
@@ -80,6 +82,11 @@ public class HomeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return todoLists.size() + 2;
+    }
+
+    @Override
+    public boolean hasDivider(int position) {
+        return position != getItemCount() - 1;
     }
 
     public interface HomeListCallback {
