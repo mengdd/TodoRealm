@@ -1,10 +1,6 @@
 # TodoRealm
 An Android Todo-list sample application to play with Realm.
 
-## Screenshots
-
-![home-list](images/home-list.png) ![list-detail](images/list-detail-1.png) ![multi-select-tasks-to-delete](images/multi-select-tasks-to-delete.png)
-
 ## Features
 ### Basic Features
 - [x] Home List: List of lists.
