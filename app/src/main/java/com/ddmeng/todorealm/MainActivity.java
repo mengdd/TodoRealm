@@ -10,6 +10,8 @@ import com.ddmeng.todorealm.detail.list.ListDetailFragment;
 import com.ddmeng.todorealm.detail.task.TaskDetailFragment;
 import com.ddmeng.todorealm.home.HomeListFragment;
 import com.ddmeng.todorealm.home.add.task.AddTaskFragment;
+import com.tencent.stat.StatConfig;
+import com.tencent.stat.StatService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
         todoRepository = TodoRepository.getInstance();
         todoRepository.getRealm();
+
+        StatConfig.setDebugEnable(true);
+        StatService.trackCustomEvent(this, "onCreate", "welcome");
     }
 
     private void showHomeList() {
