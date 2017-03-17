@@ -1,6 +1,10 @@
 # TodoRealm
 An Android Todo-list sample application to play with Realm.
 
+## Screenshots
+
+![home-list](images/home-list.png) ![list-detail](images/list-detail-1.png) ![multi-select-tasks-to-delete](images/multi-select-tasks-to-delete.png)
+
 ## Features
 ### Basic Features
 - [x] Home List: List of lists.
@@ -26,7 +30,7 @@ An Android Todo-list sample application to play with Realm.
 ### Features backlog
 - [ ] Add due date to task.
 - [ ] About screen.
-- [ ] Confirm before deleting.
+- [x] Confirm before deleting.
 - [ ] Task priority, mark a task as important, urgent or current doing.
 - [ ] Drag to change the item order in list.
 - [ ] Settings screen:
